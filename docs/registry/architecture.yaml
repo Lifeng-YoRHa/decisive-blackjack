@@ -1,0 +1,289 @@
+# Architecture Decision Registry
+#
+# PURPOSE: Single source of truth for key architectural stances that all ADRs
+# must agree on. Skills check this before writing new ADRs to detect conflicts
+# at authoring time — before stories are created against contradictory decisions.
+#
+# RULES:
+#   - Register a stance when it constrains how OTHER systems must be built.
+#     An internal implementation detail that affects only one ADR does not need
+#     to be registered.
+#   - Never delete entries — set status: superseded_by: ADR-NNNN instead.
+#   - When a stance changes: update the entry, set revised: to today's date,
+#     add a comment with the old value, and run /architecture-review to check
+#     what ADRs are now invalidated.
+#   - adr: is the authoritative source. All other ADRs that depend on this
+#     stance list themselves in referenced_by.
+#
+# WRITTEN BY: /architecture-decision (Phase 5 — after ADR is approved)
+# READ BY:    /architecture-decision (Step 2 — before authoring begins)
+#             /architecture-review (Phase 4 — cross-ADR conflict baseline)
+#             /create-stories (to embed architectural constraints in stories)
+#             /dev-story (to check implementation against accepted stances)
+#
+# SEARCH PATTERNS (for skills using Grep):
+#   All state owners:       Grep pattern="^  - state:" path="docs/registry/architecture.yaml"
+#   Who owns player_health: Grep pattern="state: player_health"
+#   All signal contracts:   Grep pattern="pattern: signal"
+#   Budget for combat:      Grep pattern="system: combat"
+#   All forbidden patterns: Grep pattern="^  - pattern:" (forbidden_patterns section)
+#   Superseded entries:     Grep pattern="status: superseded"
+
+version: 1
+last_updated: "2026-04-26"
+
+# ─── STATE OWNERSHIP ─────────────────────────────────────────────────────────
+# Who is the authoritative owner of each piece of shared game state.
+# Conflicts: two ADRs claiming to own the same state = data race / authority bug.
+#
+# Register state when it is READ or WRITTEN by more than one system.
+# Internal-only state (never accessed by another system) does not need to be registered.
+#
+# Required fields: state, owner_system, adr, interface, referenced_by[], added
+# interface: how other systems access this state (read-only property, method call,
+#   signal, shared resource, etc.) — this is the contract other ADRs depend on.
+
+state_ownership:
+  - state: game_system_refs
+    status: active
+    owner_system: GameManager
+    adr: docs/architecture/adr-0001-scene-node-architecture.md
+    interface: "GameManager holds @onready refs to all 17 subsystems; injects via initialize() during _ready()"
+    write_access: game-manager-only
+    referenced_by:
+      - docs/architecture/adr-0001-scene-node-architecture.md
+    added: 2026-04-26
+    revised: ""
+  - state: card_instance_attrs
+    status: active
+    owner_system: CardDataModel
+    adr: docs/architecture/adr-0002-card-data-model.md
+    interface: "CardInstance.assign_stamp(), assign_quality(), destroy_quality(), purify() — mutation only via these methods; revision auto-incremented; attribute_changed signal emitted"
+    write_access: card-data-model-only (via mutation methods)
+    referenced_by:
+      - docs/architecture/adr-0002-card-data-model.md
+      - docs/architecture/adr-0001-scene-node-architecture.md
+    added: 2026-04-26
+    revised: ""
+  - state: save_data
+    status: active
+    owner_system: SaveSystem (or RoundManager if no dedicated SaveSystem)
+    adr: docs/architecture/adr-0005-save-load-strategy.md
+    interface: "save_game() -> bool, load_game() -> bool — JSON file at user://save_game.json; atomic validation before applying"
+    write_access: save-system-only
+    referenced_by:
+      - docs/architecture/adr-0005-save-load-strategy.md
+    added: 2026-04-26
+    revised: ""
+# How systems are required to communicate with each other.
+# Conflicts: one ADR expects signal, another expects direct call = integration bug.
+#
+# Register a contract when the communication pattern between two systems is
+# explicitly decided in an ADR and other systems must follow the same pattern.
+#
+# pattern options: signal | direct_call | event_bus | shared_resource | rpc | none
+
+interfaces:
+  - contract: subsystem_initialization
+    status: active
+    pattern: direct_call
+    producer: GameManager
+    consumers:
+      - all subsystems
+    adr: docs/architecture/adr-0001-scene-node-architecture.md
+    signal_signature: "initialize(deps...) -> void — each subsystem declares its dependencies as parameters"
+    referenced_by:
+      - docs/architecture/adr-0001-scene-node-architecture.md
+    added: 2026-04-26
+    revised: ""
+  - contract: state_change_notification
+    status: active
+    pattern: signal
+    producer: "any system that owns mutable state (CombatState, ChipEconomy, CardInstance, RoundManager)"
+    consumers:
+      - UI (TableUI for rendering)
+      - other systems that react to state changes
+    adr: docs/architecture/adr-0003-signal-architecture.md
+    signal_signature: "{noun}_changed(args...) — emitted after state mutation; typed parameters"
+    referenced_by:
+      - docs/architecture/adr-0003-signal-architecture.md
+    added: 2026-04-26
+    revised: ""
+  - contract: player_request_signal
+    status: active
+    pattern: signal
+    producer: TableUI
+    consumers:
+      - RoundManager
+      - ShopSystem
+      - ItemSystem
+    adr: docs/architecture/adr-0003-signal-architecture.md
+    signal_signature: "player_{action}_requested(args...) — UI emits, logic connects; UI never calls logic methods directly"
+    referenced_by:
+      - docs/architecture/adr-0003-signal-architecture.md
+    added: 2026-04-26
+    revised: ""
+  - contract: settlement_event_queue
+    status: active
+    pattern: signal
+    producer: ResolutionEngine
+    consumers:
+      - TableUI (animation playback)
+    adr: docs/architecture/adr-0003-signal-architecture.md
+    signal_signature: "settlement_step_completed(events: Array[SettlementEvent]) — pre-computed event queue emitted after synchronous pipeline completion"
+    referenced_by:
+      - docs/architecture/adr-0003-signal-architecture.md
+    added: 2026-04-26
+    revised: ""
+  - contract: settlement_pipeline
+    status: active
+    pattern: direct_call
+    producer: RoundManager
+    consumers:
+      - ResolutionEngine
+    adr: docs/architecture/adr-0004-resolution-pipeline.md
+    signal_signature: "run_pipeline(14 params) -> RoundResult — synchronous, deterministic, stateless between runs"
+    referenced_by:
+      - docs/architecture/adr-0004-resolution-pipeline.md
+    added: 2026-04-26
+    revised: ""
+
+
+# ─── PERFORMANCE BUDGETS ──────────────────────────────────────────────────────
+# Frame time allocations per system, against a defined total frame budget.
+# Conflicts: allocations that sum to more than the total budget = unshippable.
+#
+# Register a budget when an ADR explicitly claims a frame time allocation.
+# The registry lets /architecture-review verify the total doesn't exceed the target.
+
+performance_budgets: []
+
+# Example:
+#
+# performance_budgets:
+#   - target_fps: 60
+#     total_frame_budget_ms: 16.6
+#     platform: PC             # PC | Console | Mobile | All
+#     adr: docs/architecture/adr-0000-performance-targets.md
+#     added: 2026-03-26
+#     revised: ""
+#
+#   - system: combat
+#     status: active
+#     budget_ms: 2.0
+#     adr: docs/architecture/adr-0003-combat-system.md
+#     notes: "Includes physics queries, hitbox evaluation, and damage calculation"
+#     referenced_by:
+#       - docs/architecture/adr-0003-combat-system.md
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── API DECISIONS ───────────────────────────────────────────────────────────
+# Which engine APIs are chosen for which purpose across the project.
+# Conflicts: two ADRs using different APIs for the same purpose = inconsistent
+# implementation that breaks when one system expects the other's API.
+#
+# Register an API decision when the choice is non-obvious and other ADRs might
+# make a different choice for the same purpose without knowing this was decided.
+
+api_decisions:
+  - purpose: subsystem_reference_acquisition
+    status: active
+    api: "@onready var + $NodePath in GameManager"
+    not: Autoload singletons, get_node() in subsystems, global access patterns
+    adr: docs/architecture/adr-0001-scene-node-architecture.md
+    reason: "Composition root pattern: GameManager wires all refs at _ready(). Subsystems receive deps via initialize(). No global state, testable, enforces layer boundaries."
+    referenced_by:
+      - docs/architecture/adr-0001-scene-node-architecture.md
+    added: 2026-04-26
+    revised: ""
+  - purpose: card_data_model_types
+    status: active
+    api: RefCounted for CardPrototype and CardInstance
+    not: Resource (too heavy for 104 internal instances), Node (no per-frame logic needed)
+    adr: docs/architecture/adr-0002-card-data-model.md
+    reason: "104 lightweight RefCounted objects with custom to_dict/from_dict serialization. Data defined in GDDs, not edited in Inspector. Performance-sensitive reads during resolution."
+    referenced_by:
+      - docs/architecture/adr-0002-card-data-model.md
+    added: 2026-04-26
+    revised: ""
+  - purpose: phase_execution_pattern
+    status: active
+    api: "Pure computation (Phases 1-4) + dispatch-only (Phase 5) + mutation-only (Phase 6)"
+    not: Mixed computation and side effects within a single phase
+    adr: docs/architecture/adr-0004-resolution-pipeline.md
+    reason: "Separation of pure arithmetic from API calls and state mutations enables unit testing of computation phases without dependencies."
+    referenced_by:
+      - docs/architecture/adr-0004-resolution-pipeline.md
+    added: 2026-04-26
+    revised: ""
+  - purpose: save_data_format
+    status: active
+    api: "JSON via FileAccess (user://save_game.json) with schema versioning"
+    not: "Godot Resource binary (.tres), encrypted binary, custom binary format"
+    adr: docs/architecture/adr-0005-save-load-strategy.md
+    reason: "CardInstance is RefCounted (not Resource) — custom to_dict/from_dict already required. JSON is human-readable, debuggable, and works with existing serialization API."
+    referenced_by:
+      - docs/architecture/adr-0005-save-load-strategy.md
+    added: 2026-04-26
+    revised: ""
+  - purpose: ai_decision_pattern
+    status: active
+    api: "Single AIOpponent class with tier-indexed const lookup tables"
+    not: "Polymorphic strategy subclasses (3 classes for 3 tiers), data-driven JSON decision tables"
+    adr: docs/architecture/adr-0006-ai-strategy-pattern.md
+    reason: "3 tiers differ only in hit/stand logic (20 lines). Lookup tables achieve same effect as polymorphism without 3x boilerplate. SMART/OPTIMAL require runtime computation not suitable for data-driven tables."
+    referenced_by:
+      - docs/architecture/adr-0006-ai-strategy-pattern.md
+    added: 2026-04-26
+    revised: ""
+  - purpose: shop_weighted_selection
+    status: active
+    api: "Inline cumulative weight scan (O(n) per draw, Dictionary weights)"
+    not: "Utility WeightedSelector class (over-engineered for 2 call sites), pre-built pool (423 items for 4 draws)"
+    adr: docs/architecture/adr-0007-shop-weighted-random.md
+    reason: "Only shop needs weighted random. 15-line inline function serves same purpose as 100-line utility class with zero reuse."
+    referenced_by:
+      - docs/architecture/adr-0007-shop-weighted-random.md
+    added: 2026-04-26
+    revised: ""
+  - purpose: ui_scene_composition
+    status: active
+    api: "Multi-scene composition (TableUI.tscn + CardView.tscn + ShopOverlay.tscn)"
+    not: "Monolithic single .tscn (500+ nodes unwieldy), programmatic node creation (no editor preview)"
+    adr: docs/architecture/adr-0008-ui-node-hierarchy.md
+    reason: "CardView and ShopOverlay have distinct lifecycles. Separating scenes enables independent editing, card pooling, and keeps scene tree manageable."
+    referenced_by:
+      - docs/architecture/adr-0008-ui-node-hierarchy.md
+    added: 2026-04-26
+    revised: ""
+
+forbidden_patterns:
+  - pattern: get_node_outside_game_manager
+    status: active
+    description: "Subsystems must not call get_node() or get_parent() to find other subsystems. Only GameManager and TableUI scene setup may use node path lookups."
+    why: "Node path lookups create hidden dependencies, break when scene tree changes, and violate the explicit dependency injection pattern."
+    adr: docs/architecture/adr-0001-scene-node-architecture.md
+    added: 2026-04-26
+
+  - pattern: accessing_subsystem_without_injected_ref
+    status: active
+    description: "No subsystem may access another subsystem without receiving a reference via initialize(). No globals, no singletons, no autoloads for game logic."
+    why: "Hidden access breaks the dependency direction (Core must not call Feature). Injected refs make dependencies explicit and testable."
+    adr: docs/architecture/adr-0001-scene-node-architecture.md
+    added: 2026-04-26
+
+  - pattern: event_bus_or_string_dispatch
+    status: active
+    description: "No centralized EventBus node or string-based signal dispatch. Use Godot's native typed signals on each system node."
+    why: "String-based dispatch loses type safety. Native signals provide typed parameters, editor support, and explicit connections visible in GameManager._wire_signals()."
+    adr: docs/architecture/adr-0003-signal-architecture.md
+    added: 2026-04-26
+
+  - pattern: ui_calling_logic_methods
+    status: active
+    description: "UI must never call game logic methods directly. All player actions are forwarded via player_*_requested signals that logic nodes connect to."
+    why: "Direct calls create hidden coupling between presentation and logic layers. Request signals keep UI as a pure consumer and make the dependency direction explicit."
+    adr: docs/architecture/adr-0003-signal-architecture.md
+    added: 2026-04-26

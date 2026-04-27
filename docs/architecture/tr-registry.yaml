@@ -1,0 +1,957 @@
+# Technical Requirement ID Registry
+#
+# PURPOSE: Persistent, stable IDs for every GDD technical requirement.
+# Prevents TR-ID renumbering across /architecture-review runs.
+#
+# RULES:
+#   - IDs are PERMANENT. Never renumber, never delete (use status: deprecated).
+#   - Add new entries only at the END of each system's list.
+#   - When a GDD requirement is reworded (same intent): update `requirement`
+#     text and add a `revised` date. The ID stays the same.
+#   - When a requirement is removed from the GDD: set status: deprecated.
+#   - When a requirement is split or replaced: set status: superseded-by with
+#     the new TR-ID(s).
+#
+# WRITTEN BY: /architecture-review (appends new entries, never overwrites)
+# READ BY:    /create-stories (embed IDs in stories)
+#             /story-done (look up current requirement text at review time)
+#             /story-readiness (validate TR-ID exists and is active)
+#
+# ID FORMAT: TR-[system-slug]-[NNN]
+#   system-slug = short slug matching the GDD system name
+#   NNN = three-digit zero-padded sequence per system, starting at 001
+#
+# STATUS VALUES: active | deprecated | superseded-by: TR-[system]-NNN
+
+version: 3
+last_updated: "2026-04-26"
+
+requirements:
+  # === card-data-model (#1) ===
+  - id: TR-cdm-001
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "52 immutable CardPrototype instances as RefCounted with suit, rank, bj_values, effect_value, chip_value"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-002
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "104 mutable CardInstance instances as RefCounted with prototype, owner, stamp, quality, quality_level, revision"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-003
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "CardInstance.attribute_changed signal for state observation by UI and other systems"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-004
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "is_valid_assignment(suit, quality) enforces gem-suit binding (RUBY→DIAMONDS, SAPPHIRE→HEARTS, EMERALD→CLUBS, OBSIDIAN→SPADES)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-005
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "to_dict/from_dict serialization on CardInstance for save/load"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-006
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "52-card invariant per owner (unique key: owner+suit+rank, 104 instances total)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-007
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "destroy_quality() method sets quality=null, quality_level=III for gem destroy mechanics"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-008
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "Lookup tables: effect_value_lookup, chip_value_lookup, gem_destroy_prob, metal_chip_bonus, gem_bonus as const dictionaries"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-009
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "Deck management: draw pile + discard pile with reshuffle when draw pile empty"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cdm-010
+    system: card-data-model
+    gdd: design/gdd/card-data-model.md
+    requirement: "104 instances total: 52 per owner (PLAYER + AI), indexed by (owner, suit, rank)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === point-calculation-engine (#2) ===
+  - id: TR-pce-001
+    system: point-calculation-engine
+    gdd: design/gdd/point-calculation-engine.md
+    requirement: "Stateless pure function calculate_hand(cards) returns PointResult {point_total, is_bust, ace_count, soft_ace_count, card_count}"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-pce-002
+    system: point-calculation-engine
+    gdd: design/gdd/point-calculation-engine.md
+    requirement: "simulate_hit(current PointResult, new_card) for AI decision support, O(1) incremental"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-pce-003
+    system: point-calculation-engine
+    gdd: design/gdd/point-calculation-engine.md
+    requirement: "A resolution: greedy algorithm, ACE_HIGH=11, downgrade by 10 while >21, yields maximum non-bust value"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-pce-004
+    system: point-calculation-engine
+    gdd: design/gdd/point-calculation-engine.md
+    requirement: "BUST_THRESHOLD=21 constant, is_bust = point_total > 21"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === hand-type-detection (#3) ===
+  - id: TR-htd-001
+    system: hand-type-detection
+    gdd: design/gdd/hand-type-detection.md
+    requirement: "7 hand types: PAIR, FLUSH, THREE_KIND, TRIPLE_SEVEN, TWENTY_ONE, BLACKJACK_TYPE, SPADE_BLACKJACK with detection rules"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-htd-002
+    system: hand-type-detection
+    gdd: design/gdd/hand-type-detection.md
+    requirement: "per_card_multiplier calculation based on hand type and hand size (FLUSH=hand_count, PAIR=2, etc.)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-htd-003
+    system: hand-type-detection
+    gdd: design/gdd/hand-type-detection.md
+    requirement: "ai_hand_type_score for AI deck construction evaluation"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-htd-004
+    system: hand-type-detection
+    gdd: design/gdd/hand-type-detection.md
+    requirement: "Detection runs after point calculation (Phase 5), before settlement (Phase 6+)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === stamp-system (#4) ===
+  - id: TR-stamp-001
+    system: stamp-system
+    gdd: design/gdd/stamp-system.md
+    requirement: "7 stamp types (SWORD, SHIELD, HEART, COIN, HAMMER, RUNNING_SHOES, TURTLE) with stamp_bonus_lookup"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-stamp-002
+    system: stamp-system
+    gdd: design/gdd/stamp-system.md
+    requirement: "stamp_sort_key: RUNNING_SHOES=0, default=1, TURTLE=2 for settlement order sorting"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-stamp-003
+    system: stamp-system
+    gdd: design/gdd/stamp-system.md
+    requirement: "HAMMER pre-scan mechanism: targets opponent card at same settlement position"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-stamp-004
+    system: stamp-system
+    gdd: design/gdd/stamp-system.md
+    requirement: "Stamps stored on CardInstance.stamp field, set by shop purchase, persistent across rounds"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === card-quality-system (#5) ===
+  - id: TR-cqs-001
+    system: card-quality-system
+    gdd: design/gdd/card-quality-system.md
+    requirement: "8 quality types (4 metal + 4 gem), 3 purity levels (III→II→I), gem-suit binding enforcement"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cqs-002
+    system: card-quality-system
+    gdd: design/gdd/card-quality-system.md
+    requirement: "Dual-track settlement: combat_effect = (effect_value + stamp_combat_bonus + gem_quality_bonus) × multiplier; chip_output = (chip_value_base + metal_chip_bonus + gem_chip_bonus + stamp_coin_bonus) × multiplier"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cqs-003
+    system: card-quality-system
+    gdd: design/gdd/card-quality-system.md
+    requirement: "Gem destroy check per settlement: randf() < destroy_prob(level), independent rolls, destroy after effects applied"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cqs-004
+    system: card-quality-system
+    gdd: design/gdd/card-quality-system.md
+    requirement: "quality_bonus_resolve lookup table: quality+level → {combat_type, combat_value, chip_value}"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-cqs-005
+    system: card-quality-system
+    gdd: design/gdd/card-quality-system.md
+    requirement: "Suit restriction: RUBY→DIAMONDS, SAPPHIRE→HEARTS, EMERALD→CLUBS, OBSIDIAN→SPADES via is_valid_assignment()"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === card-sorting-system (#6a) ===
+  - id: TR-sort-001
+    system: card-sorting-system
+    gdd: design/gdd/card-sorting-system.md
+    requirement: "Two-pass sorting: Pass 1 manual drag, Pass 2 stable_sort_by(stamp_sort_key, manual_order)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sort-002
+    system: card-sorting-system
+    gdd: design/gdd/card-sorting-system.md
+    requirement: "1-based position assignment: sorted_hand[0]→pos 1, sorted_hand[n-1]→pos n"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sort-003
+    system: card-sorting-system
+    gdd: design/gdd/card-sorting-system.md
+    requirement: "AI tiebreak_function interface: deterministic, receives same-key-group cards, returns ordered list"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sort-004
+    system: card-sorting-system
+    gdd: design/gdd/card-sorting-system.md
+    requirement: "Sort timer (30s default) with auto-confirm on expiry, last 5s red flash"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sort-005
+    system: card-sorting-system
+    gdd: design/gdd/card-sorting-system.md
+    requirement: "Card locking for padlock item: set_card_locked(card, bool), locked cards immovable in Pass 1, unlock before Pass 2"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === combat-system (#7) ===
+  - id: TR-combat-001
+    system: combat-system
+    gdd: design/gdd/combat-system.md
+    requirement: "Combatant structs with hp, max_hp, defense; player max_hp=100, AI max_hp scaled by opponent_number"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-combat-002
+    system: combat-system
+    gdd: design/gdd/combat-system.md
+    requirement: "API: apply_damage(target, amount), apply_heal(target, amount), add_defense(target, amount), apply_bust_damage(target, amount) with hp_changed/defense_changed signals"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-combat-003
+    system: combat-system
+    gdd: design/gdd/combat-system.md
+    requirement: "Defense bypass: apply_bust_damage reduces hp directly, ignoring defense"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-combat-004
+    system: combat-system
+    gdd: design/gdd/combat-system.md
+    requirement: "queue_defense(target, amount) for delayed defense (FIFO, triggered between sort-end and settlement-start)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-combat-005
+    system: combat-system
+    gdd: design/gdd/combat-system.md
+    requirement: "reset_defense() at Phase 7a (end of each round), defense set to 0 for both sides"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-combat-006
+    system: combat-system
+    gdd: design/gdd/combat-system.md
+    requirement: "AI HP scaling: lookup table by opponent_number, range [80-300]"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-combat-007
+    system: combat-system
+    gdd: design/gdd/combat-system.md
+    requirement: "Death check: after all cards settled AND defense reset; hp<=0 triggers death result"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-combat-008
+    system: combat-system
+    gdd: design/gdd/combat-system.md
+    requirement: "pending_defense FIFO queue executed before first card settlement, after sort completion"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === resolution-engine (#6) ===
+  - id: TR-res-001
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "7-phase settlement pipeline (0a-7b): insurance/blackjack/hammer → doubledown → bust → stamp → suit+quality → gem destroy → defense reset → death check"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-002
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "Track separation: suit effect and stamp effect dispatch independently per card"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-003
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "Alternating settlement: settlement_first_player pos1 → other pos1 → first pos2 → other pos2 → ..."
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-004
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "Pre-computed SettlementEvent queue: Array of RefCounted events emitted via settlement_step_completed signal"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-005
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "Seeded RandomNumberGenerator for deterministic gem destroy rolls"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-006
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "Split support: sequential sub-pipeline calls with shared HP"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-007
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "Synchronous execution: entire pipeline runs in single frame, no yields/awaits"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-008
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "Bust handling: busting side skips phases 2-6, self-damage bypasses defense"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-009
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "HAMMER pre-scan: before main loop, detect HAMMER stamps and pre-compute position targets"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-res-010
+    system: resolution-engine
+    gdd: design/gdd/resolution-engine.md
+    requirement: "Doubledown: ×2 on effect_value and chip_value_base only (not stamp/quality bonuses)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === special-plays-system (#8) ===
+  - id: TR-sp-001
+    system: special-plays-system
+    gdd: design/gdd/special-plays-system.md
+    requirement: "Double down: ×2 effect_value and chip_value_base only, available only with 2 cards and no split"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sp-002
+    system: special-plays-system
+    gdd: design/gdd/special-plays-system.md
+    requirement: "Split: sequential sub-pipelines with shared HP, available only when initial 2 cards have same rank"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sp-003
+    system: special-plays-system
+    gdd: design/gdd/special-plays-system.md
+    requirement: "Insurance: 30 chips or 6 HP payment, triggered when AI shows A, pays out if AI has J/Q/K"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sp-004
+    system: special-plays-system
+    gdd: design/gdd/special-plays-system.md
+    requirement: "Condition checks: split=rank match on first 2 cards; doubledown=2 cards no split; insurance=AI upcard is A"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sp-005
+    system: special-plays-system
+    gdd: design/gdd/special-plays-system.md
+    requirement: "Insurance dual payment paths: chip path (30 chips via spend_chips) or HP path (6 HP via apply_damage)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-sp-006
+    system: special-plays-system
+    gdd: design/gdd/special-plays-system.md
+    requirement: "Split creates two sub-hands with independent HIT_STAND phases, shared HP pool"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === chip-economy (#10) ===
+  - id: TR-chip-001
+    system: chip-economy
+    gdd: design/gdd/chip-economy.md
+    requirement: "Balance range [0, 999] with CHIP_CAP enforcement on add_chips()"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-chip-002
+    system: chip-economy
+    gdd: design/gdd/chip-economy.md
+    requirement: "API: add_chips(amount, source), spend_chips(amount, purpose)→bool, can_afford(amount)→bool, get_balance()→int"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-chip-003
+    system: chip-economy
+    gdd: design/gdd/chip-economy.md
+    requirement: "Transaction logging with source categories for each add/spend"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-chip-004
+    system: chip-economy
+    gdd: design/gdd/chip-economy.md
+    requirement: "6 income sources (RESOLUTION, SETTLEMENT_TIE_COMP, SIDE_POOL_RETURN, SHOP_SELL, VICTORY_BONUS, INSURANCE_REFUND) and 3 spend categories (SHOP_PURCHASE, SIDE_POOL_BET, INSURANCE)"
+    created: "2026-04-26"
+    revised: "2026-04-26"
+    status: active
+
+  - id: TR-chip-005
+    system: chip-economy
+    gdd: design/gdd/chip-economy.md
+    requirement: "second_player_bonus=50 chips awarded when player goes second in a round — DELETED per design override, replaced by SETTLEMENT_TIE_COMP=20"
+    created: "2026-04-26"
+    revised: "2026-04-26"
+    status: deprecated
+
+  - id: TR-chip-006
+    system: chip-economy
+    gdd: design/gdd/chip-economy.md
+    requirement: "victory_bonus formula: base + opponent scaling when defeating an opponent"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-chip-007
+    system: chip-economy
+    gdd: design/gdd/chip-economy.md
+    requirement: "Atomic spend-before-mutate: spend_chips() must succeed before any card mutation occurs"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === side-pool (#9) ===
+  - id: TR-spool-001
+    system: side-pool
+    gdd: design/gdd/side-pool.md
+    requirement: "7-side-pool: count sevens in 3 visible cards, payout by multiplier table (×0/×2/×5/×15)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-spool-002
+    system: side-pool
+    gdd: design/gdd/side-pool.md
+    requirement: "Casino War: compare max rank in 4 cards (A=14 highest), ×2 payout on player win, tie=loss"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-spool-003
+    system: side-pool
+    gdd: design/gdd/side-pool.md
+    requirement: "3 bet tiers: 10/20/50 chips, player bets separately for each pool"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-spool-004
+    system: side-pool
+    gdd: design/gdd/side-pool.md
+    requirement: "Settlement timing: bets before deal (Phase 2a/2b), settlement after deal (Phase 2c/2d), before insurance/split"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === shop-system (#11) ===
+  - id: TR-shop-001
+    system: shop-system
+    gdd: design/gdd/shop-system.md
+    requirement: "Fixed services + random inventory: fixed (heal, quality assign, purify, item purchase), random (2 stamps + 2 enhanced cards)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-shop-002
+    system: shop-system
+    gdd: design/gdd/shop-system.md
+    requirement: "Weighted random selection: cumulative scan algorithm for shop inventory generation"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-shop-003
+    system: shop-system
+    gdd: design/gdd/shop-system.md
+    requirement: "Sell/refund: sell_refund formula returns portion of investment"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-shop-004
+    system: shop-system
+    gdd: design/gdd/shop-system.md
+    requirement: "Refresh mechanism: re-roll random inventory at cost"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-shop-005
+    system: shop-system
+    gdd: design/gdd/shop-system.md
+    requirement: "Atomic spend-before-mutate for all purchases: spend_chips() before card/item mutation"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-shop-006
+    system: shop-system
+    gdd: design/gdd/shop-system.md
+    requirement: "Pricing tables: stamp prices, quality prices (40-200), purification costs (100/200), item prices (60-150)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-shop-007
+    system: shop-system
+    gdd: design/gdd/shop-system.md
+    requirement: "Quality assignment (any→III) and purification (III→II→I) services with suit restriction validation"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-shop-008
+    system: shop-system
+    gdd: design/gdd/shop-system.md
+    requirement: "Item purchases in shop: check inventory cap (5), call spend_chips(), add ItemInstance to inventory"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === ai-opponent (#12) ===
+  - id: TR-ai-001
+    system: ai-opponent
+    gdd: design/gdd/ai-opponent.md
+    requirement: "3 decision tiers (BASIC/SMART/OPTIMAL) with tier-indexed const lookup tables"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ai-002
+    system: ai-opponent
+    gdd: design/gdd/ai-opponent.md
+    requirement: "generate_deck() with constraints: card count limits, quality count (max 30), suit distribution"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ai-003
+    system: ai-opponent
+    gdd: design/gdd/ai-opponent.md
+    requirement: "hand_type_score evaluation for AI deck construction: score each possible hand type"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ai-004
+    system: ai-opponent
+    gdd: design/gdd/ai-opponent.md
+    requirement: "Sort strategies: RANDOM, DEFAULT (effect_value DESC), TACTICAL (context-aware)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ai-005
+    system: ai-opponent
+    gdd: design/gdd/ai-opponent.md
+    requirement: "calculate_bust_probability using simulate_hit and deck knowledge"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ai-006
+    system: ai-opponent
+    gdd: design/gdd/ai-opponent.md
+    requirement: "Const lookup tables indexed by opponent_number for difficulty scaling"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === round-management (#13) ===
+  - id: TR-rm-001
+    system: round-management
+    gdd: design/gdd/round-management.md
+    requirement: "8-phase round pipeline: DEAL→SIDE_POOL→INSURANCE→SPLIT_CHECK→HIT_STAND→SORT→RESOLUTION→DEATH_CHECK"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-rm-002
+    system: round-management
+    gdd: design/gdd/round-management.md
+    requirement: "first_player alternation: toggles each round between PLAYER and AI"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-rm-003
+    system: round-management
+    gdd: design/gdd/round-management.md
+    requirement: "settlement_first_player: determined by comparing point_totals, lower goes first (advantage)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-rm-004
+    system: round-management
+    gdd: design/gdd/round-management.md
+    requirement: "Split sub-pipeline: each split hand runs independent HIT_STAND→SORT→RESOLUTION, shared HP"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-rm-005
+    system: round-management
+    gdd: design/gdd/round-management.md
+    requirement: "Phase transition signals: phase_entered(phase), phase_exited(phase), round_result(result)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-rm-006
+    system: round-management
+    gdd: design/gdd/round-management.md
+    requirement: "Opponent transition: DEATH_CHECK→SHOP→next opponent or VICTORY/GAME_OVER"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === match-progression (#14) ===
+  - id: TR-mp-001
+    system: match-progression
+    gdd: design/gdd/match-progression.md
+    requirement: "5-state FSM: NEW_GAME→OPPONENT_N→SHOP→VICTORY/GAME_OVER"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-mp-002
+    system: match-progression
+    gdd: design/gdd/match-progression.md
+    requirement: "opponent_number ownership: starts at 1, increments after each opponent defeated"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-mp-003
+    system: match-progression
+    gdd: design/gdd/match-progression.md
+    requirement: "Shop gating: enter shop only after opponent defeated, shop between opponents"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-mp-004
+    system: match-progression
+    gdd: design/gdd/match-progression.md
+    requirement: "Initialization sequence: NEW_GAME→set initial chips→generate AI deck→start round 1"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-mp-005
+    system: match-progression
+    gdd: design/gdd/match-progression.md
+    requirement: "Auto-save triggers: after DEATH_CHECK CONTINUE, on shop enter, on opponent defeated"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === item-system (#16) ===
+  - id: TR-item-001
+    system: item-system
+    gdd: design/gdd/item-system.md
+    requirement: "7 item types (ENERGY_DRINK, KNIFE, XRAY_GLASSES, SMALL_MIRROR, MINI_EXPLOSIVE, PADLOCK, THICK_CLOTHES), 3 timing categories (instant, sort-modifier, delayed)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-item-002
+    system: item-system
+    gdd: design/gdd/item-system.md
+    requirement: "Inventory management: max 5 items, persists across rounds and opponents, cleared on game end"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-item-003
+    system: item-system
+    gdd: design/gdd/item-system.md
+    requirement: "Item usage restricted to SORT phase: items usable only during manual sorting, window closes on confirm"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-item-004
+    system: item-system
+    gdd: design/gdd/item-system.md
+    requirement: "Cross-system calls: apply_heal (energy drink), apply_damage (knife), queue_defense (thick clothes), quality/stamp clear (mini explosive), card lock (padlock)"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-item-005
+    system: item-system
+    gdd: design/gdd/item-system.md
+    requirement: "Padlock card locking: set_card_locked during Pass 1, auto-unlock before Pass 2, locks opponent card position"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  # === table-ui (#15) ===
+  - id: TR-ui-001
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "5 permanent screen regions at 1920×1080: opponent info, AI hand, central info, player hand, action bar"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-002
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "CardView renders suit, rank, stamp icon, quality border+icon, position number from CardInstance fields"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-003
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Card spacing algorithm: 1-3 cards even distribution, 4-7 fixed 80px offset, 8-11 tight overlap ~55px"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-004
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Settlement animation from pre-computed event queue: Tween playback of SettlementEvent array with configurable delays"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-005
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Phase-driven button enable/disable: match on RoundPhase determines visible buttons"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-006
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Sort timer countdown: 30s default, auto-confirm on expiry, red flash last 5s"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-007
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Drag-and-drop card sorting during SORT phase with position number preview"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-008
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Split-hand layout: player hand area splits into left/right sub-areas, active hand highlighted"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-009
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Shop overlay: ShopOverlay.tscn shown/hidden, overlays table without affecting game state"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-010
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Godot 4.6 dual-focus: separate visual styles for mouse hover and gamepad focus during SORT"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-011
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "AI card flip animation: scale X→0, swap texture, scale X→1, staggered 200ms intervals"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-012
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Chip counter rolling animation: 0.5s Tween from old to new value"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-013
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "HP bar color thresholds: green>50%, yellow 25-50%, red flashing <25%"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-014
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Draw calls under 100 via texture atlas for card elements"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-015
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Item bar rendering in SORT phase: show available items, item use interaction"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-016
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Side pool UI: bet selection (10/20/50/skip) and settlement result display"
+    created: "2026-04-26"
+    revised: ""
+    status: active
+
+  - id: TR-ui-017
+    system: table-ui
+    gdd: design/gdd/table-ui.md
+    requirement: "Accessibility: keyboard full operation, gamepad support, min 14px/18px fonts, color+icon dual encoding, AccessKit screen reader"
+    created: "2026-04-26"
+    revised: ""
+    status: active

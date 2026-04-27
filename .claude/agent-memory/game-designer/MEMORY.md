@@ -1,0 +1,2 @@
+- [Project Context](project-context.md) - Blackjack Showdown: strategy card game, 8 opponents, Godot 4.6.2, GDScript
+- [User Preferences](user-preferences.md) - User provides concrete game facts and asks for concrete numbers, prefers analysis-driven answers

@@ -1,0 +1,1251 @@
+# Game World Entity Registry
+#
+# PURPOSE: Single source of truth for all named game-world facts that appear
+# in more than one document. Skills check this before writing new content to
+# detect cross-doc inconsistencies at authoring time.
+#
+# RULES:
+#   - Only register facts that cross system boundaries. Internal-only facts
+#     (a formula used in one GDD only) do NOT need to be registered.
+#   - Never delete entries — set status: deprecated instead.
+#   - When a value changes: update the value, set revised: to today's date,
+#     and add a comment with the old value and which GDD changed it.
+#   - source: is the authoritative GDD — the one that "owns" this fact.
+#     Other GDDs that reference it list themselves in referenced_by.
+#   - When a new GDD references an existing entry, append its path to
+#     referenced_by. Do not create a duplicate entry.
+#
+# WRITTEN BY: /design-system (Phase 5 — after GDD sections are approved)
+#             /consistency-check (when resolving conflicts)
+# READ BY:    /design-system (Phase 2 — before authoring begins, and after
+#               Section C/D writes to conflict-check new entities/formulas)
+#             /consistency-check (primary input — grep-first, GDD-second)
+#             /review-all-gdds (Phase 1 — baseline for Phase 2 checks)
+#             /architecture-review (data structure and interface validation)
+#
+# SEARCH PATTERNS (for skills using Grep):
+#   All entity names:        Grep pattern="^  - name:" path="design/registry/entities.yaml"
+#   Specific entity:         Grep pattern="  - name: goblin" path="design/registry/entities.yaml"
+#   All items:               Grep pattern="^  - name:" path="design/registry/entities.yaml" (items section)
+#   What combat.md owns:     Grep pattern="source: design/gdd/combat.md"
+#   What inventory.md uses:  Grep pattern="referenced_by.*inventory"
+#   All gold values:          Grep pattern="value_gold:"
+#   Deprecated entries:      Grep pattern="status: deprecated"
+#
+# FORMAT: YAML. Consistent indentation is critical for grep reliability.
+#   Sections: entities | items | formulas | constants
+#   Each entry: name, status, source, referenced_by[], attributes{}, added, revised
+
+version: 1
+last_updated: "2026-04-26"
+
+# ─── ENTITIES ────────────────────────────────────────────────────────────────
+# Named game-world objects: enemies, NPCs, characters, factions, bosses.
+# Register an entity here when it appears in more than one GDD — e.g., an
+# enemy defined in combat.md that also drops items listed in inventory.md.
+#
+# Required fields: name, status, source, referenced_by, added
+# Attribute fields: any key stats that could appear in another GDD
+#   (health, damage, drops, faction, etc.)
+
+entities: []
+
+# Example (remove when first real entry is added):
+#
+# entities:
+#   - name: goblin
+#     status: active              # active | deprecated
+#     source: design/gdd/combat.md
+#     referenced_by:
+#       - design/gdd/combat.md
+#       - design/gdd/inventory.md
+#     health: 40
+#     damage: 8
+#     drops:
+#       - item: goblin_arm        # must match an entry in items section
+#         qty: 1
+#         drop_rate: 0.8          # 0.0–1.0
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── ITEMS ───────────────────────────────────────────────────────────────────
+# Named collectables, equipment, consumables, crafting materials, currency.
+# Register an item when its name or value appears in more than one GDD.
+#
+# Required fields: name, status, source, referenced_by, added
+# Attribute fields: value_gold, weight, stackable, category, and any stat
+#   modifiers that another system (e.g., economy, crafting) might reference.
+
+items: []
+
+# Example:
+#
+# items:
+#   - name: goblin_arm
+#     status: active
+#     source: design/gdd/combat.md   # drop defined in combat GDD
+#     referenced_by:
+#       - design/gdd/combat.md
+#       - design/gdd/inventory.md    # inventory GDD lists its weight/stack rules
+#       - design/gdd/economy.md      # economy GDD references its sell price
+#     value_gold: 5
+#     weight: 1
+#     stackable: true
+#     category: crafting_material
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── FORMULAS ────────────────────────────────────────────────────────────────
+# Named calculations with defined variables and output ranges.
+# Register a formula when its output feeds into another system's input,
+# or when another GDD references it by name.
+#
+# Required fields: name, status, source, referenced_by, variables[],
+#   output_range[min, max], added
+# Optional: expression (the actual formula), notes
+
+formulas:
+  - name: effect_value_lookup
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/stamp-system.md
+    variables:
+      - rank
+    output_range: [2, 15]
+    expression: "lookup table: A=15, 2-10=face, J=11, Q=12, K=13"
+    notes: "Maps rank to effect potency for suit-based resolution."
+    added: 2026-04-23
+    revised: ""
+
+  - name: chip_value_lookup
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/chip-economy.md
+      - design/gdd/shop-system.md
+    variables:
+      - rank
+    output_range: [10, 75]
+    expression: "lookup table: A=75, 2=10..10=50 (step 5), J=55, Q=60, K=65"
+    notes: "Base currency value of a card. Feeds into shop pricing and chip economy."
+    added: 2026-04-23
+    revised: ""
+
+  - name: base_buy_price
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/shop-system.md
+    variables:
+      - chip_value
+      - suit
+      - rank
+    output_range: [10, 85]
+    expression: "chip_value + (10 if suit=SPADES and rank in {J,Q,K,A} else 0)"
+    notes: "Shop base price before stamp/quality modifiers."
+    added: 2026-04-23
+    revised: ""
+
+  - name: gem_destroy_prob
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/card-quality-system.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/stamp-system.md
+    variables:
+      - quality_level
+    output_range: [0.05, 0.15]
+    expression: "lookup: III=0.15, II=0.10, I=0.05"
+    notes: "Applies identically to all gem types. Metal qualities never destroyed."
+    added: 2026-04-23
+    revised: ""
+
+  - name: metal_chip_bonus
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/card-quality-system.md
+      - design/gdd/stamp-system.md
+      - design/gdd/resolution-engine.md
+    variables:
+      - quality
+      - quality_level
+    output_range: [10, 82]
+    expression: "lookup table by (quality, quality_level)"
+    notes: "Extra chips from metal quality cards during resolution."
+    added: 2026-04-23
+    revised: ""
+
+  - name: gem_bonus
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/card-quality-system.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/stamp-system.md
+      - design/gdd/ai-opponent.md
+    variables:
+      - quality
+      - quality_level
+    output_range: [3, 25]
+    expression: "lookup table by (quality, quality_level): Ruby=+dmg, Sapphire=+heal, Emerald=+chips, Obsidian=+def"
+    notes: "Stat bonus from gem quality cards. Type depends on gem."
+    added: 2026-04-23
+    revised: ""
+
+  - name: counter_attack_damage
+    status: deprecated
+    source: design/gdd/combat-system.md
+    referenced_by: []
+    variables:
+      - attacker_defense
+    output_range: [0, 200]
+    expression: "counter_damage = attacker.defense (identity — raw defense value, no modifiers)"
+    notes: "REMOVED: Counter-attacks eliminated (黑桃削弱). Spades now provide pure defense only."
+    added: 2026-04-24
+    revised: "2026-04-24 — deprecated: counter-attack phase removed. defense resets at end of round."
+
+  - name: bust_self_damage
+    status: active
+    source: design/gdd/combat-system.md
+    referenced_by:
+      - design/gdd/combat-system.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/point-calculation-engine.md
+      - design/gdd/special-plays-system.md
+    variables:
+      - point_total
+    output_range: [22, 31]
+    expression: "bust_damage = point_total (Blackjack point sum, not effect_value)"
+    notes: "Checked BEFORE settlement. Bypasses defense. Double-down doubles the passed value."
+    added: 2026-04-24
+    revised: ""
+
+  - name: doubledown_bust_damage
+    status: active
+    source: design/gdd/special-plays-system.md
+    referenced_by:
+      - design/gdd/special-plays-system.md
+    variables:
+      - point_total
+      - bust_damage_multiplier
+    output_range: [22, 186]
+    expression: "bust_damage_dd = point_total × bust_damage_multiplier × 2"
+    notes: "Conditional variant of bust_self_damage when doubledown_active=true. The ×2 applies only to doubledown, not to normal busts or split hands."
+    added: 2026-04-24
+    revised: ""
+
+  - name: ai_hp_scaling
+    status: active
+    source: design/gdd/combat-system.md
+    referenced_by:
+      - design/gdd/combat-system.md
+      - design/gdd/round-management.md
+      - design/gdd/match-progression.md
+    variables:
+      - opponent_number
+    output_range: [80, 300]
+    expression: "lookup table: [80, 100, 120, 150, 180, 220, 260, 300] for opponents 1-8"
+    notes: "AI max HP per opponent. Piecewise linear curve. Opponent 1 is tutorial (below player HP)."
+    added: 2026-04-24
+    revised: ""
+
+  - name: hand_point_total
+    status: active
+    source: design/gdd/point-calculation-engine.md
+    referenced_by:
+      - design/gdd/point-calculation-engine.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/hand-type-detection.md
+      - design/gdd/ai-opponent.md
+    variables:
+      - cards
+      - non_ace_sum
+      - ace_count
+      - BUST_THRESHOLD
+    output_range: [2, 31]
+    expression: "Greedy: sum non-Ace bj_values + Aces×11, downgrade Aces by 10 while total > 21"
+    notes: "Primary calculation. Returns PointResult with total, is_bust, ace_count, soft_ace_count, card_count."
+    added: 2026-04-24
+    revised: ""
+
+  - name: simulate_hit
+    status: active
+    source: design/gdd/point-calculation-engine.md
+    referenced_by:
+      - design/gdd/point-calculation-engine.md
+      - design/gdd/ai-opponent.md
+    variables:
+      - current_point_result
+      - new_card
+    output_range: [2, 31]
+    expression: "Incremental O(1): add new card value to current total, run greedy downgrade if needed"
+    notes: "Optimized for AI decision loops. Avoids re-scanning entire hand."
+    added: 2026-04-24
+    revised: ""
+
+  - name: is_bust_check
+    status: active
+    source: design/gdd/point-calculation-engine.md
+    referenced_by:
+      - design/gdd/point-calculation-engine.md
+      - design/gdd/resolution-engine.md
+    variables:
+      - point_total
+      - BUST_THRESHOLD
+    output_range: [0, 1]
+    expression: "is_bust = (point_total > BUST_THRESHOLD)"
+    notes: "Boolean check. When true, point_total is in [22, 31+]. Feeds into bust_self_damage."
+    added: 2026-04-24
+    revised: ""
+
+  - name: stamp_bonus_lookup
+    status: active
+    source: design/gdd/stamp-system.md
+    referenced_by:
+      - design/gdd/stamp-system.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/shop-system.md
+    variables:
+      - stamp_type
+    output_range: [0, 10]
+    expression: "lookup: SWORD=2(DAMAGE), SHIELD=2(DEFENSE), HEART=2(HEAL), COIN=10(CHIPS), HAMMER/SRUNNING_SHOES/TURTLE=non-numeric, null=0"
+    notes: "Stamp flat bonus values. Non-numeric stamps (HAMMER, RUNNING_SHOES, TURTLE) have no bonus_value. Tuning knobs: stamp_sword_bonus, stamp_shield_bonus, stamp_heart_bonus, stamp_coin_bonus."
+    added: 2026-04-24
+    revised: ""
+
+  - name: final_card_value
+    status: deprecated
+    source: design/gdd/stamp-system.md
+    referenced_by: []
+    variables:
+      - base_effect_value
+      - stamp_bonus
+      - quality_bonus
+      - hand_type_multiplier
+    output_range: [2, 1177]
+    expression: "(base_effect_value + stamp_bonus + quality_bonus) × hand_type_multiplier"
+    notes: "REPLACED by combat_effect (damage/heal/defense) and chip_output (chips) in card-quality-system.md dual-track model. Do not use in new GDDs."
+    added: 2026-04-24
+    revised: "2026-04-24 — deprecated: split into combat_effect and chip_output dual-track model."
+
+  - name: stamp_sort_key
+    status: active
+    source: design/gdd/stamp-system.md
+    referenced_by:
+      - design/gdd/stamp-system.md
+      - design/gdd/card-sorting-system.md
+    variables:
+      - stamp_type
+    output_range: [0, 2]
+    expression: "lookup: RUNNING_SHOES=0, default(SWORD/SHIELD/HEART/COIN/HAMMER/null)=1, TURTLE=2"
+    notes: "Sort priority for settlement ordering. Lower = settles first. Stable sort preserves manual sub-order within same key."
+    added: 2026-04-24
+    revised: ""
+
+  - name: compose_settlement_order
+    status: active
+    source: design/gdd/card-sorting-system.md
+    referenced_by:
+      - design/gdd/card-sorting-system.md
+      - design/gdd/resolution-engine.md
+    variables:
+      - hand
+      - manual_order
+      - stamp_sort_key
+    output_range: [1, 11]
+    expression: "stable_sort(hand, primary=stamp_sort_key ASC, secondary=manual_order ASC)"
+    notes: "Two-pass sort: manual drag order then stamp auto-grouping. Output feeds resolution engine's alternating settlement."
+    added: 2026-04-24
+    revised: ""
+
+  - name: assign_positions
+    status: active
+    source: design/gdd/card-sorting-system.md
+    referenced_by:
+      - design/gdd/card-sorting-system.md
+      - design/gdd/resolution-engine.md
+    variables:
+      - sorted_hand
+    output_range: [1, 11]
+    expression: "enumerate(sorted_hand, 1-based): card[0]=pos1, card[1]=pos2, ..."
+    notes: "Maps sorted hand to 1-based settlement positions. Frozen after confirm."
+    added: 2026-04-24
+    revised: ""
+
+  - name: ai_default_tiebreak
+    status: active
+    source: design/gdd/card-sorting-system.md
+    referenced_by:
+      - design/gdd/card-sorting-system.md
+      - design/gdd/ai-opponent.md
+    variables:
+      - cards
+      - effect_value
+      - rank
+      - suit
+    output_range: [1, 11]
+    expression: "sort(cards, by=[effect_value DESC, rank DESC, suit ASC])"
+    notes: "Deterministic AI tiebreak within same stamp_sort_key group. Fallback when AI system doesn't provide custom strategy."
+    added: 2026-04-24
+    revised: ""
+
+  - name: flush_multiplier
+    status: active
+    source: design/gdd/hand-type-detection.md
+    referenced_by:
+      - design/gdd/hand-type-detection.md
+      - design/gdd/resolution-engine.md
+    variables:
+      - cards
+    output_range: [2, 11]
+    expression: "M_flush = |cards| (hand size)"
+    notes: "FLUSH hand type multiplier equals hand size. Min 2, max 11 (theoretical). Feeds into hand_type_multiplier in final_card_value."
+    added: 2026-04-24
+    revised: ""
+
+  - name: per_card_multiplier
+    status: active
+    source: design/gdd/hand-type-detection.md
+    referenced_by:
+      - design/gdd/hand-type-detection.md
+      - design/gdd/resolution-engine.md
+    variables:
+      - scope
+      - M_base
+      - affected_indices
+    output_range: [1.0, 11.0]
+    expression: "M_base IF (ALL or scoped+in_indices), 1.0 IF (scoped+not_in_indices)"
+    notes: "Per-card multiplier array. Scoped types (PAIR/THREE_KIND) apply M_base to affected cards only. ALL types apply to every card."
+    added: 2026-04-24
+    revised: ""
+
+  - name: ai_hand_type_score
+    status: active
+    source: design/gdd/hand-type-detection.md
+    referenced_by:
+      - design/gdd/hand-type-detection.md
+      - design/gdd/ai-opponent.md
+    variables:
+      - per_card_multiplier
+      - effect_value
+      - stamp_bonus
+      - quality_bonus
+    output_range: [2, 12947]
+    expression: "SUM(per_card_multiplier[i] × (effect_value[i] + stamp_bonus[i] + quality_bonus[i]))"
+    notes: "AI heuristic for choosing among matching hand types. SPADE_BLACKJACK = infinity (always pick). Used by AI opponent system for optimal hand type selection."
+    added: 2026-04-24
+    revised: "2026-04-24 — was [2, 1177] (per-card max); corrected to SUM total max"
+
+  - name: combat_effect
+    status: active
+    source: design/gdd/card-quality-system.md
+    referenced_by:
+      - design/gdd/card-quality-system.md
+      - design/gdd/resolution-engine.md
+    variables:
+      - effect_value
+      - stamp_combat_bonus
+      - gem_quality_bonus
+      - hand_type_multiplier
+    output_range: [2, 242]
+    expression: "(effect_value + stamp_combat_bonus + gem_quality_bonus) × hand_type_multiplier"
+    notes: "Combat effect stream (damage/heal/defense). Replaces final_card_value for combat output. Metal quality does not contribute. Max = (15+2+5)×11."
+    added: 2026-04-24
+    revised: ""
+
+  - name: chip_output
+    status: active
+    source: design/gdd/card-quality-system.md
+    referenced_by:
+      - design/gdd/card-quality-system.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/chip-economy.md
+    variables:
+      - chip_value_base
+      - metal_chip_bonus
+      - gem_chip_bonus
+      - stamp_coin_bonus
+      - hand_type_multiplier
+    output_range: [0, 1837]
+    expression: "(chip_value_base + metal_chip_bonus + gem_chip_bonus + stamp_coin_bonus) × hand_type_multiplier"
+    notes: "Chip output stream. chip_value_base = chip_value for Clubs, 0 for others. metal_chip_bonus and gem_chip_bonus are mutually exclusive (one quality per card). Max = (75+82+0+10)×11."
+    added: 2026-04-24
+    revised: ""
+
+  - name: quality_bonus_resolve
+    status: active
+    source: design/gdd/card-quality-system.md
+    referenced_by:
+      - design/gdd/card-quality-system.md
+      - design/gdd/resolution-engine.md
+    variables:
+      - quality
+      - quality_level
+    output_range: [0, 82]
+    expression: "lookup table: returns {combat_type, combat_value, chip_value} by (quality, quality_level)"
+    notes: "Unified quality bonus resolver. Metals return chip_value only. Gems return combat_value (except EMERALD which returns chip_value). Null returns all zeros."
+    added: 2026-04-24
+    revised: ""
+
+  - name: purification_cost
+    status: active
+    source: design/gdd/card-quality-system.md
+    referenced_by:
+      - design/gdd/card-quality-system.md
+      - design/gdd/shop-system.md
+    variables:
+      - current_level
+    output_range: [100, 200]
+    expression: "lookup: III→II=100, II→I=200"
+    notes: "Per-card purification cost. One level per purchase. quality must be non-null."
+    added: 2026-04-24
+    revised: ""
+
+  - name: assignment_cost
+    status: active
+    source: design/gdd/card-quality-system.md
+    referenced_by:
+      - design/gdd/card-quality-system.md
+      - design/gdd/shop-system.md
+    variables:
+      - quality
+    output_range: [40, 200]
+    expression: "lookup: COPPER=40, SILVER=80, GOLD=120, DIAMOND=200, gems=120"
+    notes: "Shop quality assignment cost. New quality always starts at level III. Can overwrite existing quality."
+    added: 2026-04-24
+    revised: ""
+
+  - name: victory_bonus
+    status: active
+    source: design/gdd/chip-economy.md
+    referenced_by:
+      - design/gdd/chip-economy.md
+      - design/gdd/match-progression.md
+      - design/gdd/table-ui.md
+    variables:
+      - VICTORY_BASE
+      - VICTORY_SCALE
+      - opponent_number
+    output_range: [75, 250]
+    expression: "VICTORY_BASE + VICTORY_SCALE × opponent_number"
+    notes: "Linear scaling victory reward. Default: 50 + 25×n. Defeating opponent 1 = 75, opponent 8 = 250."
+    added: 2026-04-24
+    revised: ""
+
+  - name: sell_price
+    status: active
+    source: design/gdd/chip-economy.md
+    referenced_by:
+      - design/gdd/chip-economy.md
+      - design/gdd/shop-system.md
+    variables:
+      - buy_price
+      - sell_price_ratio
+    output_range: [0, 400]
+    expression: "floor(buy_price × sell_price_ratio)"
+    notes: "Card sell price. Floor rounding prevents buy-sell arbitrage. buy_price = total_investment (stamp cost + quality cost + purification costs) as defined by shop-system sell_refund."
+    added: 2026-04-24
+    revised: "2026-04-25 — output_range corrected from [5, 42] to [0, 400] to match shop-system sell_refund formula. 0 for unenhanced cards, 400 for HAMMER+DIAMOND I."
+
+  - name: sp7_payout
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+      - design/gdd/chip-economy.md
+    variables:
+      - bet_sp7
+      - seven_count
+      - M7
+      - CHIP_CAP
+    output_range: [0, 750]
+    expression: "min(floor(bet_sp7 × M7[seven_count]), CHIP_CAP)"
+    notes: "7-Side Pool gross return. M7 lookup: {0:0, 1:2, 2:5, 3:15}. Bet tiers: {10, 20, 50}. 52% house edge."
+    added: 2026-04-25
+    revised: ""
+
+  - name: cw_payout
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+      - design/gdd/chip-economy.md
+    variables:
+      - bet_cw
+      - max_rank_player
+      - max_rank_ai
+      - M_cw
+      - CHIP_CAP
+    output_range: [0, 100]
+    expression: "min(floor(bet_cw × M_cw[outcome]), CHIP_CAP) where outcome=WIN if max_rank_player>max_rank_ai else LOSE/TIE"
+    notes: "Casino War gross return. M_cw: WIN=2, LOSE=0, TIE=0. Ties count as loss. A=14 highest rank. 10.3% house edge."
+    added: 2026-04-25
+    revised: ""
+
+  - name: hp_recovery_cost
+    status: active
+    source: design/gdd/shop-system.md
+    referenced_by:
+      - design/gdd/shop-system.md
+    variables:
+      - hp_amount
+      - HP_COST_PER_POINT
+    output_range: [5, 500]
+    expression: "hp_amount × HP_COST_PER_POINT"
+    notes: "HP recovery cost in shop. hp_amount ∈ [1, max_hp - current_hp]. Max = 100×5 = 500."
+    added: 2026-04-25
+    revised: ""
+
+  - name: random_card_price
+    status: active
+    source: design/gdd/shop-system.md
+    referenced_by:
+      - design/gdd/shop-system.md
+    variables:
+      - base_buy_price
+      - enhancement_price
+      - RANDOM_DISCOUNT_RATIO
+    output_range: [30, 235]
+    expression: "base_buy_price + floor(enhancement_price × RANDOM_DISCOUNT_RATIO)"
+    notes: "Random enhanced card price in shop. Each card has exactly one enhancement (stamp or quality). base_buy_price from card-data-model, enhancement_price from stamp/quality price tables."
+    added: 2026-04-25
+    revised: ""
+
+  - name: sell_refund
+    status: active
+    source: design/gdd/shop-system.md
+    referenced_by:
+      - design/gdd/shop-system.md
+      - design/gdd/chip-economy.md
+    variables:
+      - total_investment
+      - sell_price_ratio
+    output_range: [0, 400]
+    expression: "floor(total_investment × sell_price_ratio)"
+    notes: "Shop sell refund. total_investment range [0, 800] (max = HAMMER 300 + DIAMOND I 200 + purify 300). sell_price_ratio = 0.50, so max output = 400. Implements chip-economy sell_price formula with total_investment as buy_price."
+    added: 2026-04-25
+    revised: ""
+#     status: active
+#     source: design/gdd/combat.md
+#     referenced_by:
+#       - design/gdd/combat.md
+#       - design/gdd/progression.md   # progression GDD scales attack variable
+#     variables:
+#       - attack
+#       - defense
+#       - crit_chance
+#       - crit_multiplier
+#     output_range: [0, 999]
+#     expression: "max(0, attack - defense) * (1 + crit_chance * crit_multiplier)"
+#     notes: "Output feeds into health-system damage intake. Min is 0 (armour
+#       can absorb all damage). Max is uncapped in formula but tuning knob
+#       damage_cap in combat.md clamps at 999."
+#     added: 2026-03-26
+#     revised: ""
+
+
+# ─── CONSTANTS ───────────────────────────────────────────────────────────────
+# Named numerical values referenced across multiple systems.
+# Register a constant when it is defined in one GDD but another GDD must
+# agree with it (e.g., gold carry limit defined in economy but checked in
+# inventory, or base inventory slots defined in inventory but displayed in HUD).
+#
+# Required fields: name, status, source, referenced_by, value, unit, added
+
+constants:
+  - name: deck_size
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/round-management.md
+      - design/gdd/shop-system.md
+    value: 52
+    unit: cards per owner
+    added: 2026-04-23
+    revised: ""
+
+  - name: ai_max_hammers
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/ai-opponent.md
+    value: 3
+    unit: cards
+    added: 2026-04-23
+    revised: ""
+
+  - name: ai_max_stamps
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/ai-opponent.md
+    value: 30
+    unit: cards
+    added: 2026-04-23
+    revised: ""
+
+  - name: ai_max_qualities
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/ai-opponent.md
+    value: 30
+    unit: cards
+    added: 2026-04-23
+    revised: ""
+
+  - name: sell_price_ratio
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/shop-system.md
+      - design/gdd/chip-economy.md
+    value: 0.50
+    unit: ratio
+    added: 2026-04-23
+    revised: ""
+
+  - name: spade_face_bonus
+    status: active
+    source: design/gdd/card-data-model.md
+    referenced_by:
+      - design/gdd/card-data-model.md
+      - design/gdd/shop-system.md
+    value: 10
+    unit: chips
+    added: 2026-04-23
+    revised: ""
+
+  - name: player_max_hp
+    status: active
+    source: design/gdd/combat-system.md
+    referenced_by:
+      - design/gdd/combat-system.md
+      - design/gdd/shop-system.md
+      - design/gdd/table-ui.md
+      - design/gdd/special-plays-system.md
+      - design/gdd/round-management.md
+    value: 100
+    unit: HP
+    added: 2026-04-24
+    revised: ""
+
+  - name: BUST_THRESHOLD
+    status: active
+    source: design/gdd/point-calculation-engine.md
+    referenced_by:
+      - design/gdd/point-calculation-engine.md
+      - design/gdd/combat-system.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/special-plays-system.md
+    value: 21
+    unit: points
+    added: 2026-04-24
+    revised: ""
+
+  - name: stamp_sword_bonus
+    status: active
+    source: design/gdd/stamp-system.md
+    referenced_by:
+      - design/gdd/stamp-system.md
+      - design/gdd/resolution-engine.md
+    value: 2
+    unit: effect points (damage)
+    added: 2026-04-24
+    revised: ""
+
+  - name: stamp_shield_bonus
+    status: active
+    source: design/gdd/stamp-system.md
+    referenced_by:
+      - design/gdd/stamp-system.md
+      - design/gdd/resolution-engine.md
+    value: 2
+    unit: effect points (defense)
+    added: 2026-04-24
+    revised: ""
+
+  - name: stamp_heart_bonus
+    status: active
+    source: design/gdd/stamp-system.md
+    referenced_by:
+      - design/gdd/stamp-system.md
+      - design/gdd/resolution-engine.md
+    value: 2
+    unit: effect points (healing)
+    added: 2026-04-24
+    revised: ""
+
+  - name: stamp_coin_bonus
+    status: active
+    source: design/gdd/stamp-system.md
+    referenced_by:
+      - design/gdd/stamp-system.md
+      - design/gdd/resolution-engine.md
+      - design/gdd/chip-economy.md
+    value: 10
+    unit: chips
+    added: 2026-04-24
+    revised: ""
+
+  - name: sort_timer_seconds
+    status: active
+    source: design/gdd/card-sorting-system.md
+    referenced_by:
+      - design/gdd/card-sorting-system.md
+      - design/gdd/table-ui.md
+      - design/gdd/round-management.md
+    value: 30.0
+    unit: seconds
+    added: 2026-04-24
+    revised: ""
+
+  - name: ui_hand_display_limit
+    status: active
+    source: design/gdd/card-sorting-system.md
+    referenced_by:
+      - design/gdd/card-sorting-system.md
+      - design/gdd/table-ui.md
+      - design/gdd/round-management.md
+    value: 11
+    unit: cards
+    added: 2026-04-24
+    revised: ""
+
+  - name: purify_cost_iii_to_ii
+    status: active
+    source: design/gdd/card-quality-system.md
+    referenced_by:
+      - design/gdd/card-quality-system.md
+      - design/gdd/shop-system.md
+    value: 100
+    unit: chips
+    added: 2026-04-24
+    revised: ""
+
+  - name: purify_cost_ii_to_i
+    status: active
+    source: design/gdd/card-quality-system.md
+    referenced_by:
+      - design/gdd/card-quality-system.md
+      - design/gdd/shop-system.md
+    value: 200
+    unit: chips
+    added: 2026-04-24
+    revised: ""
+
+  - name: initial_chips
+    status: active
+    source: design/gdd/chip-economy.md
+    referenced_by:
+      - design/gdd/chip-economy.md
+      - design/gdd/round-management.md
+      - design/gdd/table-ui.md
+    value: 100
+    unit: chips
+    added: 2026-04-24
+    revised: ""
+
+  - name: chip_cap
+    status: active
+    source: design/gdd/chip-economy.md
+    referenced_by:
+      - design/gdd/chip-economy.md
+      - design/gdd/table-ui.md
+      - design/gdd/shop-system.md
+      - design/gdd/round-management.md
+    value: 999
+    unit: chips
+    added: 2026-04-24
+    revised: ""
+
+  - name: second_player_bonus
+    status: deprecated
+    source: design/gdd/chip-economy.md
+    referenced_by: []
+    value: 50
+    unit: chips
+    added: 2026-04-24
+    revised: "2026-04-26 — replaced by settlement_tie_compensation (20 chips)"
+
+  - name: insurance_chip_cost
+    status: active
+    source: design/gdd/chip-economy.md
+    referenced_by:
+      - design/gdd/chip-economy.md
+      - design/gdd/special-plays-system.md
+    value: 30
+    unit: chips
+    added: 2026-04-24
+    revised: ""
+
+  - name: victory_base
+    status: active
+    source: design/gdd/chip-economy.md
+    referenced_by:
+      - design/gdd/chip-economy.md
+      - design/gdd/round-management.md
+    value: 50
+    unit: chips
+    added: 2026-04-24
+    revised: ""
+
+  - name: victory_scale
+    status: active
+    source: design/gdd/chip-economy.md
+    referenced_by:
+      - design/gdd/chip-economy.md
+      - design/gdd/round-management.md
+    value: 25
+    unit: chips
+    added: 2026-04-24
+    revised: ""
+
+  - name: insurance_hp_cost
+    status: active
+    source: design/gdd/special-plays-system.md
+    referenced_by:
+      - design/gdd/special-plays-system.md
+      - design/gdd/round-management.md
+      - design/gdd/combat-system.md
+    value: 6
+    unit: HP
+    added: 2026-04-24
+    revised: ""
+
+  - name: bust_damage_multiplier
+    status: active
+    source: design/gdd/combat-system.md
+    referenced_by:
+      - design/gdd/combat-system.md
+      - design/gdd/special-plays-system.md
+    value: 1.0
+    unit: multiplier
+    added: 2026-04-26
+    revised: ""
+
+  - name: settlement_tie_compensation
+    status: active
+    source: design/gdd/round-management.md
+    referenced_by:
+      - design/gdd/round-management.md
+      - design/gdd/chip-economy.md
+      - design/gdd/combat-system.md
+      - design/gdd/table-ui.md
+    value: 20
+    unit: chips
+    added: 2026-04-26
+    revised: ""
+
+  - name: total_opponents
+    status: deprecated
+    source: design/gdd/round-management.md
+    referenced_by:
+      - design/gdd/round-management.md
+      - design/gdd/match-progression.md
+      - design/gdd/table-ui.md
+    value: 8
+    unit: opponents
+    added: 2026-04-24
+    revised: "2026-04-25 — ownership transferred to match-progression GDD. Use the active entry with source: design/gdd/match-progression.md."
+
+  - name: bet_tier_small
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+      - design/gdd/chip-economy.md
+      - design/gdd/table-ui.md
+    value: 10
+    unit: chips
+    added: 2026-04-25
+    revised: ""
+
+  - name: bet_tier_medium
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+      - design/gdd/chip-economy.md
+      - design/gdd/table-ui.md
+    value: 20
+    unit: chips
+    added: 2026-04-25
+    revised: ""
+
+  - name: bet_tier_large
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+      - design/gdd/chip-economy.md
+      - design/gdd/table-ui.md
+    value: 50
+    unit: chips
+    added: 2026-04-25
+    revised: ""
+
+  - name: sp7_multiplier_1
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+    value: 2
+    unit: multiplier
+    added: 2026-04-25
+    revised: ""
+
+  - name: sp7_multiplier_2
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+    value: 5
+    unit: multiplier
+    added: 2026-04-25
+    revised: ""
+
+  - name: sp7_multiplier_3
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+    value: 15
+    unit: multiplier
+    added: 2026-04-25
+    revised: ""
+
+  - name: cw_win_multiplier
+    status: active
+    source: design/gdd/side-pool.md
+    referenced_by:
+      - design/gdd/side-pool.md
+    value: 2
+    unit: multiplier
+    added: 2026-04-25
+    revised: ""
+
+  - name: total_opponents
+    status: active
+    source: design/gdd/match-progression.md
+    referenced_by:
+      - design/gdd/match-progression.md
+      - design/gdd/round-management.md
+      - design/gdd/table-ui.md
+      - design/gdd/combat-system.md
+    value: 8
+    unit: opponents
+    added: 2026-04-25
+    revised: ""
+
+  - name: hp_cost_per_point
+    status: active
+    source: design/gdd/shop-system.md
+    referenced_by:
+      - design/gdd/shop-system.md
+    value: 5
+    unit: chips per HP
+    added: 2026-04-25
+    revised: ""
+
+  - name: refresh_cost
+    status: active
+    source: design/gdd/shop-system.md
+    referenced_by:
+      - design/gdd/shop-system.md
+    value: 20
+    unit: chips
+    added: 2026-04-25
+    revised: ""
+
+  - name: random_discount_ratio
+    status: active
+    source: design/gdd/shop-system.md
+    referenced_by:
+      - design/gdd/shop-system.md
+    value: 0.50
+    unit: ratio
+    added: 2026-04-25
+    revised: ""
+
+  - name: shop_visits
+    status: active
+    source: design/gdd/shop-system.md
+    referenced_by:
+      - design/gdd/shop-system.md
+      - design/gdd/round-management.md
+    value: 7
+    unit: visits per match
+    added: 2026-04-25
+    revised: ""
+
+  - name: item_max_inventory
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+      - design/gdd/shop-system.md
+    value: 5
+    unit: items
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_energy_drink_heal
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+    value: 10
+    unit: HP
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_knife_damage
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+    value: 10
+    unit: HP
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_thick_clothes_defense
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+    value: 10
+    unit: defense
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_xray_reveal_count
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+    value: 3
+    unit: cards
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_energy_drink_price
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+      - design/gdd/shop-system.md
+    value: 70
+    unit: chips
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_knife_price
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+      - design/gdd/shop-system.md
+    value: 70
+    unit: chips
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_xray_price
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+      - design/gdd/shop-system.md
+    value: 150
+    unit: chips
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_mirror_price
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+      - design/gdd/shop-system.md
+    value: 100
+    unit: chips
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_explosive_price
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+      - design/gdd/shop-system.md
+    value: 150
+    unit: chips
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_thick_clothes_price
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+      - design/gdd/shop-system.md
+    value: 60
+    unit: chips
+    added: 2026-04-26
+    revised: ""
+
+  - name: item_padlock_price
+    status: active
+    source: design/gdd/item-system.md
+    referenced_by:
+      - design/gdd/item-system.md
+      - design/gdd/shop-system.md
+    value: 100
+    unit: chips
+    added: 2026-04-26
+    revised: ""
+
+# Example:
+#
+# constants:
+#   - name: gold_carry_limit
+#     status: active
+#     source: design/gdd/economy.md
+#     referenced_by:
+#       - design/gdd/economy.md
+#       - design/gdd/inventory.md   # inventory enforces the carry limit
+#       - design/gdd/ui.md          # HUD displays current gold vs limit
+#     value: 9999
+#     unit: gold
+#     added: 2026-03-26
+#     revised: ""
+#
+#   - name: base_inventory_slots
+#     status: active
+#     source: design/gdd/inventory.md
+#     referenced_by:
+#       - design/gdd/inventory.md
+#       - design/gdd/progression.md  # progression unlocks additional slots
+#     value: 20
+#     unit: slots
+#     added: 2026-03-26
+#     revised: ""
