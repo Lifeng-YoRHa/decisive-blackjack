@@ -1,7 +1,7 @@
 # Story 001: Chip Balance, Transactions, and Victory Bonus
 
 > **Epic**: Chip Economy
-> **Status**: Ready
+> **Status**: Complete
 > **Layer**: Feature
 > **Type**: Logic
 > **Manifest Version**: N/A — manifest not yet created
@@ -152,7 +152,7 @@ AI no-ops: for MVP, ChipEconomy only tracks the player's balance. Any call with 
 **Story Type**: Logic
 **Required evidence**: `tests/unit/chip_economy/chip_economy_test.gd` — must exist and pass
 
-**Status**: [ ] Not yet created
+**Status**: [x] Created — 36 tests, all passing
 
 ---
 
@@ -160,3 +160,12 @@ AI no-ops: for MVP, ChipEconomy only tracks the player's balance. Any call with 
 
 - Depends on: None
 - Unlocks: Resolution Engine epic (chip injection during settlement), Round Management epic (victory bonus, spend-before-mutate)
+
+## Completion Notes
+**Completed**: 2026-04-27
+**Criteria**: 14/14 passing (all auto-verified via unit tests)
+**Deviations**:
+- ADVISORY: Victory bonus formula unified to ADR-0010 version `50 + 25 × (n-1)` (range 50-225). GDD originally specified `50 + 25 × n` (range 75-250). User-directed change.
+- ADVISORY: `assert()` replaced with guard clauses for zero/negative amounts. Story AC-17 permits either approach.
+**Test Evidence**: Logic — `tests/unit/chip_economy/chip_economy_test.gd` (36 tests, all passing)
+**Code Review**: Complete — APPROVED WITH SUGGESTIONS (array typing fixed, formula unified)
