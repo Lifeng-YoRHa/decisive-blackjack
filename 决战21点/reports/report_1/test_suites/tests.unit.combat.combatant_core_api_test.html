@@ -34,12 +34,12 @@
 		<div class="report-container">
 			<h1>Testsuite Report</h1>
 			<div>
-				<span class="label">res://tests/unit/hand_type_detection/hand_type_detection_test.gd</span>
+				<span class="label">res://tests/unit/combat/combatant_core_api_test.gd</span>
 			</div>
 			<div class="summary">
 				<div class="summary-item">
 					<span class="label">Tests</span>
-					<span class="value">22</span>
+					<span class="value">38</span>
 				</div>
 				<div class="summary-item">
 					<span class="label">Skipped</span>
@@ -59,7 +59,7 @@
 				</div>
 				<div class="summary-item">
 					<span class="label">Duration</span>
-					<span class="value">167ms</span>
+					<span class="value">533ms</span>
 				</div>
 				<div class="success-rate">
 					<div class="check-icon status-passed">✓</div>
@@ -72,8 +72,8 @@
 		</div>
 		<div class="breadcrumb">
 			<a href="../index.html"><span>All</span></a>
-			<a href="../path/tests.unit.hand_type_detection.html"><span>tests/unit/hand_type_detection</span></a>
-			<a class="active" href="#"><span>hand_type_detection_test</span></a>
+			<a href="../path/tests.unit.combat.html"><span>tests/unit/combat</span></a>
+			<a class="active" href="#"><span>combatant_core_api_test</span></a>
 		</div>
 	</header>
 
@@ -94,35 +94,7 @@
 					<tbody>
 						
 								<tr class="testcase-group">
-									<td>test_bust_returns_empty</td>
-									<td><span class="status status-passed">PASSED</span></td>
-									<td>0</td>
-									<td>0</td>
-									<td>4ms</td>
-									<td class="report-column">
-										<pre>
-
-										</pre>
-									</td>
-								</tr>
-
-
-								<tr class="testcase-group">
-									<td>test_non_bust_no_match</td>
-									<td><span class="status status-passed">PASSED</span></td>
-									<td>0</td>
-									<td>0</td>
-									<td>5ms</td>
-									<td class="report-column">
-										<pre>
-
-										</pre>
-									</td>
-								</tr>
-
-
-								<tr class="testcase-group">
-									<td>test_pair_detection</td>
+									<td>test_is_alive_at_full_hp</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
@@ -136,11 +108,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_flush_detection</td>
+									<td>test_is_alive_at_one_hp</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>4ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -150,11 +122,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_three_kind_detection</td>
+									<td>test_is_dead_at_zero_hp</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>4ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -164,11 +136,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_triple_seven_detection</td>
+									<td>test_player_hp_is_100</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -178,11 +150,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_twenty_one_detection</td>
+									<td>test_player_max_hp_is_100</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -192,11 +164,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_blackjack_type_ace_jack</td>
+									<td>test_player_defense_starts_at_zero</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -206,11 +178,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_blackjack_excludes_queen</td>
+									<td>test_ai_default_hp_is_80</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>14ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -220,11 +192,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_blackjack_excludes_king</td>
+									<td>test_ai_hp_scaling_all_tiers</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>7ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -234,11 +206,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_blackjack_excludes_ten</td>
+									<td>test_ai_defense_starts_at_zero</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -248,11 +220,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_spade_blackjack_detection</td>
+									<td>test_add_defense_accumulates</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -262,11 +234,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_spade_blackjack_excludes_spade_queen</td>
+									<td>test_add_defense_no_cap</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -276,11 +248,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_independent_pairs</td>
+									<td>test_add_defense_to_ai</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -290,11 +262,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_spade_blackjack_absorbs_blackjack</td>
+									<td>test_reset_defense_clears_both</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -304,11 +276,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_split_suppression</td>
+									<td>test_damage_reduces_hp</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -318,11 +290,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_triple_seven_and_three_kind_cooccur</td>
+									<td>test_damage_absorbed_by_defense</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -332,11 +304,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_flush_two_cards</td>
+									<td>test_damage_exceeds_defense_reduces_hp</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -346,11 +318,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_output_structure_completeness</td>
+									<td>test_damage_exact_defense_full_absorb</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -360,11 +332,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_validate_multipliers_default_passes</td>
+									<td>test_damage_hp_floors_at_zero</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -374,11 +346,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_validate_multipliers_violates_hierarchy</td>
+									<td>test_damage_hp_floors_at_zero_no_negative</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -388,11 +360,263 @@
 
 
 								<tr class="testcase-group">
-									<td>test_custom_multipliers_overrides</td>
+									<td>test_damage_to_ai</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_is_alive_false_after_lethal_damage</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_is_alive_true_after_nonlethal_damage</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_heal_restores_hp</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>14ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_heal_capped_at_max_hp</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_heal_at_max_hp_returns_full_overflow</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_heal_exact_to_max_no_overflow</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_heal_on_ai</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_reset_defense_idempotent_when_already_zero</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_reset_defense_twice_in_a_row</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_hp_changed_emitted_on_damage</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_hp_changed_not_emitted_when_defense_absorbs_all</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_hp_changed_emitted_on_heal_when_hp_changes</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_hp_changed_not_emitted_on_heal_at_max_hp</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_defense_changed_emitted_on_add</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_defense_changed_emitted_on_damage_absorb</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_defense_changed_emitted_on_reset</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_defense_changed_not_emitted_on_reset_when_already_zero</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_signal_target_correct_for_ai</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 

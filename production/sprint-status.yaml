@@ -8,16 +8,17 @@ end: "2026-05-10"
 generated: "2026-04-27"
 updated: "2026-04-27"
 
+
 stories:
   - id: "2-1"
     name: "Combat State: Combatant struct + HP/defense + damage/heal + bust + death check"
-    file: ""
+    file: "production/epics/combat-state/story-001-combatant-core-api.md"
     priority: must-have
-    status: ready-for-dev
+    status: done
     owner: ""
     estimate_days: 0.5
     blocker: ""
-    completed: ""
+    completed: "2026-04-27"
 
   - id: "2-2"
     name: "Chip Economy: balance + add/spend + can_afford + victory bonus + cap"
