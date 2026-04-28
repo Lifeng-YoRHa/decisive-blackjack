@@ -6,7 +6,7 @@ goal: "Build Core + Presentation layer for first playable round — completing M
 start: "2026-05-04"
 end: "2026-05-10"
 generated: "2026-04-27"
-updated: "2026-04-27"
+updated: "2026-04-28"
 
 
 stories:
@@ -32,13 +32,13 @@ stories:
 
   - id: "2-3"
     name: "Resolution Engine MVP: bust + suit effects + multipliers (no stamps/quality)"
-    file: ""
+    file: "production/epics/resolution-engine/story-001-suit-dispatch-settlement.md"
     priority: must-have
-    status: ready-for-dev
+    status: done
     owner: ""
     estimate_days: 0.5
     blocker: ""
-    completed: ""
+    completed: "2026-04-28"
 
   - id: "2-4"
     name: "AI Opponent MVP: hit below 17, random sort"

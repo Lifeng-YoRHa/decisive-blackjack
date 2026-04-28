@@ -1,7 +1,7 @@
 # Story 001: Pipeline Core — Suit Dispatch and Alternating Settlement
 
 > **Epic**: Resolution Engine
-> **Status**: Ready
+> **Status**: Complete
 > **Layer**: Core
 > **Type**: Integration
 > **Manifest Version**: N/A — manifest not yet created
@@ -29,18 +29,18 @@
 
 *From GDD `design/gdd/resolution-engine.md`, scoped to MVP:*
 
-- [ ] AC-13: Alternating settlement order — settlement_first_player pos1 → other pos1 → first pos2 → other pos2 → ...
-- [ ] AC-14: First-player defense advantage — spades on pos1 add defense before opponent's diamonds on pos1 can deal damage
-- [ ] AC-15: Diamonds → apply_damage to opponent with (effect_value × M)
-- [ ] AC-16: Hearts → apply_heal to owner with (effect_value × M)
-- [ ] AC-17: Spades → add_defense to owner with (effect_value × M)
-- [ ] AC-18: Clubs → add_chips to owner with (chip_value × M), no combat effect
-- [ ] AC-19 (partial): Suit effect dispatch formula: suit_effect = (effect_value + gem_quality_bonus) × M — MVP: gem_quality_bonus = 0
-- [ ] Hand type multipliers applied correctly per card (M=1.0 for no hand type, M=2.0 for PAIR, M=hand_count for FLUSH, etc.)
-- [ ] Non-symmetric hands: player 4 cards, AI 2 cards → positions 3-4 AI side skipped
-- [ ] settlement_step_completed signal emitted after pipeline completes with array of SettlementEvents
-- [ ] Pipeline runs synchronously in single frame (no yields/awaits)
-- [ ] PipelineInput struct bundles all inputs: sorted hands, point results, multipliers, settlement_first_player
+- [x] AC-13: Alternating settlement order — settlement_first_player pos1 → other pos1 → first pos2 → other pos2 → ...
+- [x] AC-14: First-player defense advantage — spades on pos1 add defense before opponent's diamonds on pos1 can deal damage
+- [x] AC-15: Diamonds → apply_damage to opponent with (effect_value × M)
+- [x] AC-16: Hearts → apply_heal to owner with (effect_value × M)
+- [x] AC-17: Spades → add_defense to owner with (effect_value × M)
+- [x] AC-18: Clubs → add_chips to owner with (chip_value × M), no combat effect
+- [x] AC-19 (partial): Suit effect dispatch formula: suit_effect = (effect_value + gem_quality_bonus) × M — MVP: gem_quality_bonus = 0
+- [x] Hand type multipliers applied correctly per card (M=1.0 for no hand type, M=2.0 for PAIR, M=hand_count for FLUSH, etc.)
+- [x] Non-symmetric hands: player 4 cards, AI 2 cards → positions 3-4 AI side skipped
+- [x] settlement_step_completed signal emitted after pipeline completes with array of SettlementEvents
+- [x] Pipeline runs synchronously in single frame (no yields/awaits)
+- [x] PipelineInput struct bundles all inputs: sorted hands, point results, multipliers, settlement_first_player
 
 ---
 
@@ -140,7 +140,21 @@ MVP multiplier is passed in via PipelineInput (computed by hand type detection f
 **Story Type**: Integration
 **Required evidence**: `tests/integration/resolution/resolution_suit_settlement_test.gd` — must exist and pass
 
-**Status**: [ ] Not yet created
+**Status**: [x] Created and passing (24 test functions)
+
+---
+
+## Dependencies
+
+- Depends on: Combat State Story 001 (Combatant API), Chip Economy Story 001 (add_chips), Sprint 1 (PointCalculation, HandTypeDetection)
+- Unlocks: Story 002 (bust and post-processing), Round Management epic
+
+## Completion Notes
+**Completed**: 2026-04-28
+**Criteria**: 12/12 passing
+**Deviations**: ADVISORY — run_pipeline() returns void instead of RoundResult (death check is Story 002 scope); no phase separation (MVP simplification); signal uses Array not Array[SettlementEvent] (GDScript limitation)
+**Test Evidence**: Integration — tests/integration/resolution/resolution_suit_settlement_test.gd (24 test functions, all passing)
+**Code Review**: APPROVED WITH SUGGESTIONS
 
 ---
 
