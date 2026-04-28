@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="决战21点"
-run/main_scene="res://control.tscn"
+run/main_scene="res://.godot/game_manager.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
