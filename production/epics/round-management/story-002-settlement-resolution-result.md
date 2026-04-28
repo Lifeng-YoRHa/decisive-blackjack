@@ -1,7 +1,7 @@
 # Story 002: Settlement First Player, Resolution Integration, and Result
 
 > **Epic**: Round Management
-> **Status**: Ready
+> **Status**: Complete
 > **Layer**: Game Flow
 > **Type**: Integration
 > **Manifest Version**: N/A — manifest not yet created
@@ -130,7 +130,7 @@ MVP opponent transition is simplified: just reset AI HP from scaling table and i
 **Story Type**: Integration
 **Required evidence**: `tests/integration/round_management/round_resolution_result_test.gd` — must exist and pass
 
-**Status**: [ ] Not yet created
+**Status**: [x] Combined into `round_manager_test.gd`
 
 ---
 
@@ -138,3 +138,10 @@ MVP opponent transition is simplified: just reset AI HP from scaling table and i
 
 - Depends on: Story 001 (phase FSM and deal), Resolution Engine Stories 001+002, Combat State Stories 001+002, Chip Economy Story 001, Sprint 1 (HandTypeDetection for multipliers)
 - Unlocks: Table UI epic (needs phase signals and round results)
+
+## Completion Notes
+**Completed**: 2026-04-28
+**Criteria**: 8/8 passing
+**Deviations**: Test file combined into `round_manager_test.gd` instead of separate `round_resolution_result_test.gd`
+**Test Evidence**: Integration test at `tests/integration/round_management/round_manager_test.gd` (30 tests, all passing)
+**Code Review**: Skipped (Lean mode)

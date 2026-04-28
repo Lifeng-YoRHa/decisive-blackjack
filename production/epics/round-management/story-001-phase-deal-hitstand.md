@@ -1,7 +1,7 @@
 # Story 001: Round Phase FSM, Deal, and Hit/Stand Flow
 
 > **Epic**: Round Management
-> **Status**: Ready
+> **Status**: Complete
 > **Layer**: Game Flow
 > **Type**: Integration
 > **Manifest Version**: N/A — manifest not yet created
@@ -127,7 +127,7 @@ first_player alternation: stored as var, toggled at end of round (when result=CO
 **Story Type**: Integration
 **Required evidence**: `tests/integration/round_management/round_phase_deal_test.gd` — must exist and pass
 
-**Status**: [ ] Not yet created
+**Status**: [x] Not yet created
 
 ---
 
@@ -135,3 +135,10 @@ first_player alternation: stored as var, toggled at end of round (when result=CO
 
 - Depends on: Combat State Stories 001+002, Chip Economy Story 001, AI Opponent Story 001, Sprint 1 (CardDataModel, PointCalculation)
 - Unlocks: Story 002 (resolution integration and results)
+
+## Completion Notes
+**Completed**: 2026-04-28
+**Criteria**: 9/9 passing
+**Deviations**: Test file combined into `round_manager_test.gd` instead of separate `round_phase_deal_test.gd`
+**Test Evidence**: Integration test at `tests/integration/round_management/round_manager_test.gd` (30 tests, all passing)
+**Code Review**: Skipped (Lean mode)
