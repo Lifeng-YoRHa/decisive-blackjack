@@ -35,6 +35,11 @@ var _suit_label: Label
 var _center_label: Label
 var _card_back: ColorRect
 
+var _position_label: Label
+var _sort_mode: bool = false
+var _sort_position: int = -1
+var sort_swap_callback: Callable
+
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(CARD_WIDTH, CARD_HEIGHT)
@@ -55,6 +60,42 @@ func set_face_up(is_face_up: bool) -> void:
 
 func get_card_instance() -> CardInstance:
 	return _card_instance
+
+
+func enable_sort_mode(enabled: bool, position: int, callback: Callable) -> void:
+	_sort_mode = enabled
+	_sort_position = position
+	sort_swap_callback = callback
+	_position_label.visible = enabled
+	_position_label.text = str(position + 1) if enabled else ""
+	mouse_filter = Control.MOUSE_FILTER_STOP if enabled else Control.MOUSE_FILTER_IGNORE
+
+
+func set_sort_position(pos: int) -> void:
+	_sort_position = pos
+	_position_label.text = str(pos + 1)
+
+
+func _get_drag_data(_at: Vector2) -> Variant:
+	if not _sort_mode:
+		return null
+	var preview := ColorRect.new()
+	preview.size = Vector2(CARD_WIDTH, CARD_HEIGHT)
+	preview.color = Color(1, 1, 1, 0.3)
+	set_drag_preview(preview)
+	return {"sort_position": _sort_position}
+
+
+func _can_drop_data(_at: Vector2, data: Variant) -> bool:
+	return _sort_mode and data is Dictionary and data.has("sort_position")
+
+
+func _drop_data(_at: Vector2, data: Variant) -> void:
+	if not _sort_mode:
+		return
+	var from_position: int = data["sort_position"]
+	if from_position != _sort_position and sort_swap_callback.is_valid():
+		sort_swap_callback.call(from_position, _sort_position)
 
 
 func _build_ui() -> void:
@@ -105,6 +146,19 @@ func _build_ui() -> void:
 	back_label.size = Vector2(CARD_WIDTH, CARD_HEIGHT)
 	_card_back.add_child(back_label)
 	add_child(_card_back)
+
+	_position_label = Label.new()
+	_position_label.name = "PositionLabel"
+	_position_label.position = Vector2(CARD_WIDTH / 2 - 10, 0)
+	_position_label.size = Vector2(20, 20)
+	_position_label.add_theme_font_size_override("font_size", 14)
+	_position_label.add_theme_color_override("font_color", Color.YELLOW)
+	_position_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_position_label.visible = false
+	add_child(_position_label)
+
+	for child in get_children():
+		child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 func _refresh_visuals() -> void:

@@ -6,7 +6,7 @@ goal: "Build Core + Presentation layer for first playable round — completing M
 start: "2026-05-04"
 end: "2026-05-10"
 generated: "2026-04-27"
-updated: "2026-04-28"
+updated: "2026-04-29"
 
 
 stories:
@@ -92,10 +92,10 @@ stories:
 
   - id: "2-9"
     name: "Card sorting UI: drag-to-reorder with settlement position numbers"
-    file: ""
+    file: "production/epics/table-ui/story-003-card-sort-drag.md"
     priority: nice-to-have
-    status: backlog
+    status: done
     owner: ""
     estimate_days: 0.5
     blocker: ""
-    completed: ""
+    completed: "2026-04-29"

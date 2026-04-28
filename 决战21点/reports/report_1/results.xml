@@ -1,141 +1,161 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites id="2026-04-29" name="report_1" tests="231" failures="0" skipped="0" flaky="0" time="0.000">
-	<testsuite id="0" name="e2e_first_round_test" package="tests/integration/e2e" timestamp="2026-04-28T16:26:22" hostname="localhost" tests="10" failures="0" errors="0" skipped="0" flaky="0" time="0.143">
+<testsuites id="2026-04-29" name="report_1" tests="240" failures="0" skipped="0" flaky="0" time="0.000">
+	<testsuite id="0" name="e2e_first_round_test" package="tests/integration/e2e" timestamp="2026-04-28T18:10:42" hostname="localhost" tests="10" failures="0" errors="0" skipped="0" flaky="0" time="0.145">
 		<testcase name="test_e2e_dealt_cards_and_point_total" classname="e2e_first_round_test" time="0.004">
 		</testcase>
 		<testcase name="test_e2e_player_hit_draws_card" classname="e2e_first_round_test" time="0.013">
 		</testcase>
-		<testcase name="test_e2e_player_stand_completes_round" classname="e2e_first_round_test" time="0.013">
+		<testcase name="test_e2e_player_stand_completes_round" classname="e2e_first_round_test" time="0.012">
 		</testcase>
-		<testcase name="test_e2e_bust_detection" classname="e2e_first_round_test" time="0.012">
+		<testcase name="test_e2e_bust_detection" classname="e2e_first_round_test" time="0.014">
 		</testcase>
-		<testcase name="test_e2e_ai_follows_hit_stand_rules" classname="e2e_first_round_test" time="0.014">
+		<testcase name="test_e2e_ai_follows_hit_stand_rules" classname="e2e_first_round_test" time="0.012">
 		</testcase>
-		<testcase name="test_e2e_settlement_events_match_state" classname="e2e_first_round_test" time="0.012">
+		<testcase name="test_e2e_settlement_events_match_state" classname="e2e_first_round_test" time="0.013">
 		</testcase>
-		<testcase name="test_e2e_round_result_is_valid" classname="e2e_first_round_test" time="0.014">
+		<testcase name="test_e2e_round_result_is_valid" classname="e2e_first_round_test" time="0.013">
 		</testcase>
 		<testcase name="test_e2e_three_rounds_accumulation" classname="e2e_first_round_test" time="0.012">
 		</testcase>
-		<testcase name="test_e2e_opponent_transition" classname="e2e_first_round_test" time="0.012">
+		<testcase name="test_e2e_opponent_transition" classname="e2e_first_round_test" time="0.014">
 		</testcase>
-		<testcase name="test_e2e_events_reference_dealt_cards" classname="e2e_first_round_test" time="0.013">
+		<testcase name="test_e2e_events_reference_dealt_cards" classname="e2e_first_round_test" time="0.012">
 		</testcase>
 	</testsuite>
-	<testsuite id="1" name="resolution_suit_settlement_test" package="tests/integration/resolution" timestamp="2026-04-28T16:26:22" hostname="localhost" tests="24" failures="0" errors="0" skipped="0" flaky="0" time="0.339">
-		<testcase name="test_alternating_settlement_player_first_3v2_cards" classname="resolution_suit_settlement_test" time="0.004">
+	<testsuite id="1" name="resolution_suit_settlement_test" package="tests/integration/resolution" timestamp="2026-04-28T18:10:42" hostname="localhost" tests="24" failures="0" errors="0" skipped="0" flaky="0" time="0.338">
+		<testcase name="test_alternating_settlement_player_first_3v2_cards" classname="resolution_suit_settlement_test" time="0.003">
 		</testcase>
-		<testcase name="test_alternating_settlement_ai_first_reverses_order" classname="resolution_suit_settlement_test" time="0.012">
+		<testcase name="test_alternating_settlement_ai_first_reverses_order" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
 		<testcase name="test_alternating_settlement_1v1_two_settlements" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
 		<testcase name="test_defense_advantage_spades_before_diamonds_same_pos" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
-		<testcase name="test_no_defense_advantage_when_ai_first" classname="resolution_suit_settlement_test" time="0.012">
+		<testcase name="test_no_defense_advantage_when_ai_first" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
-		<testcase name="test_diamonds_deals_damage_to_opponent" classname="resolution_suit_settlement_test" time="0.013">
+		<testcase name="test_diamonds_deals_damage_to_opponent" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
-		<testcase name="test_diamonds_damage_with_multiplier_2" classname="resolution_suit_settlement_test" time="0.012">
+		<testcase name="test_diamonds_damage_with_multiplier_2" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
-		<testcase name="test_hearts_heals_owner" classname="resolution_suit_settlement_test" time="0.012">
+		<testcase name="test_hearts_heals_owner" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
 		<testcase name="test_hearts_capped_at_max_hp" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
 		<testcase name="test_spades_adds_defense_to_owner" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
-		<testcase name="test_spades_defense_with_multiplier" classname="resolution_suit_settlement_test" time="0.011">
+		<testcase name="test_spades_defense_with_multiplier" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
 		<testcase name="test_clubs_adds_chips_no_combat" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
-		<testcase name="test_clubs_chip_with_multiplier_2" classname="resolution_suit_settlement_test" time="0.013">
+		<testcase name="test_clubs_chip_with_multiplier_2" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
-		<testcase name="test_clubs_no_defense_no_heal_no_damage" classname="resolution_suit_settlement_test" time="0.012">
+		<testcase name="test_clubs_no_defense_no_heal_no_damage" classname="resolution_suit_settlement_test" time="0.011">
 		</testcase>
-		<testcase name="test_suit_effect_formula_mvp_no_quality_bonus" classname="resolution_suit_settlement_test" time="0.013">
+		<testcase name="test_suit_effect_formula_mvp_no_quality_bonus" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
 		<testcase name="test_suit_effect_with_multiplier" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
-		<testcase name="test_per_card_multiplier_pair_applied" classname="resolution_suit_settlement_test" time="0.014">
+		<testcase name="test_per_card_multiplier_pair_applied" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
 		<testcase name="test_per_card_multiplier_mixed" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
-		<testcase name="test_asymmetric_4v2_player_skips_ai_pos3_pos4" classname="resolution_suit_settlement_test" time="0.012">
+		<testcase name="test_asymmetric_4v2_player_skips_ai_pos3_pos4" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
-		<testcase name="test_asymmetric_2v4_ai_skips_player_pos3_pos4" classname="resolution_suit_settlement_test" time="0.013">
+		<testcase name="test_asymmetric_2v4_ai_skips_player_pos3_pos4" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
 		<testcase name="test_signal_emitted_with_events_after_pipeline" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
 		<testcase name="test_signal_events_in_settlement_order" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
-		<testcase name="test_synchronous_all_state_applied_before_return" classname="resolution_suit_settlement_test" time="0.013">
+		<testcase name="test_synchronous_all_state_applied_before_return" classname="resolution_suit_settlement_test" time="0.012">
 		</testcase>
 		<testcase name="test_pipeline_input_bundles_all_fields" classname="resolution_suit_settlement_test" time="0.013">
 		</testcase>
 	</testsuite>
-	<testsuite id="2" name="round_manager_test" package="tests/integration/round_management" timestamp="2026-04-28T16:26:23" hostname="localhost" tests="30" failures="0" errors="0" skipped="0" flaky="0" time="0.423">
-		<testcase name="test_game_init_player_hp_100" classname="round_manager_test" time="0.004">
+	<testsuite id="2" name="round_manager_test" package="tests/integration/round_management" timestamp="2026-04-28T18:10:43" hostname="localhost" tests="32" failures="0" errors="0" skipped="0" flaky="0" time="0.453">
+		<testcase name="test_game_init_player_hp_100" classname="round_manager_test" time="0.003">
 		</testcase>
-		<testcase name="test_game_init_ai_hp_80_opponent1" classname="round_manager_test" time="0.011">
+		<testcase name="test_game_init_ai_hp_80_opponent1" classname="round_manager_test" time="0.014">
 		</testcase>
-		<testcase name="test_game_init_chips_100" classname="round_manager_test" time="0.013">
+		<testcase name="test_game_init_chips_100" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_game_init_round_counter_1" classname="round_manager_test" time="0.013">
+		<testcase name="test_game_init_round_counter_1" classname="round_manager_test" time="0.012">
 		</testcase>
 		<testcase name="test_game_init_opponent_number_1" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_game_init_first_player_is_valid" classname="round_manager_test" time="0.013">
+		<testcase name="test_game_init_first_player_is_valid" classname="round_manager_test" time="0.014">
 		</testcase>
 		<testcase name="test_deal_2_cards_each" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_deal_phase_after_start_round" classname="round_manager_test" time="0.013">
+		<testcase name="test_deal_phase_after_start_round" classname="round_manager_test" time="0.012">
 		</testcase>
 		<testcase name="test_deal_sets_point_results" classname="round_manager_test" time="0.013">
 		</testcase>
-		<testcase name="test_complete_round_result_continue" classname="round_manager_test" time="0.013">
+		<testcase name="test_complete_round_result_continue" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_complete_round_counter_increments" classname="round_manager_test" time="0.012">
+		<testcase name="test_complete_round_counter_increments" classname="round_manager_test" time="0.013">
 		</testcase>
 		<testcase name="test_first_player_alternates_after_round" classname="round_manager_test" time="0.013">
 		</testcase>
 		<testcase name="test_defense_reset_at_round_start" classname="round_manager_test" time="0.013">
 		</testcase>
-		<testcase name="test_phase_changed_signal_emitted" classname="round_manager_test" time="0.012">
+		<testcase name="test_phase_changed_signal_emitted" classname="round_manager_test" time="0.013">
 		</testcase>
-		<testcase name="test_full_phase_sequence" classname="round_manager_test" time="0.013">
+		<testcase name="test_full_phase_sequence" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_auto_sort_skips_to_resolution" classname="round_manager_test" time="0.012">
+		<testcase name="test_sort_waits_for_confirm" classname="round_manager_test" time="0.014">
 		</testcase>
-		<testcase name="test_settlement_first_player_higher_points_goes_first" classname="round_manager_test" time="0.013">
+		<testcase name="test_confirm_sort_rejected_outside_sort_phase" classname="round_manager_test" time="0.013">
 		</testcase>
-		<testcase name="test_settlement_first_player_ai_higher_points" classname="round_manager_test" time="0.013">
+		<testcase name="test_confirm_sort_reorders_player_hand" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_settlement_tie_max_card_breaks" classname="round_manager_test" time="0.013">
+		<testcase name="test_settlement_first_player_higher_points_goes_first" classname="round_manager_test" time="0.011">
 		</testcase>
-		<testcase name="test_settlement_full_tie_coin_flip_and_chip_compensation" classname="round_manager_test" time="0.014">
+		<testcase name="test_settlement_first_player_ai_higher_points" classname="round_manager_test" time="0.014">
+		</testcase>
+		<testcase name="test_settlement_tie_max_card_breaks" classname="round_manager_test" time="0.012">
+		</testcase>
+		<testcase name="test_settlement_full_tie_coin_flip_and_chip_compensation" classname="round_manager_test" time="0.013">
 		</testcase>
 		<testcase name="test_player_hit_adds_card" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_player_hit_updates_point_result" classname="round_manager_test" time="0.011">
+		<testcase name="test_player_hit_updates_point_result" classname="round_manager_test" time="0.013">
 		</testcase>
-		<testcase name="test_player_win_when_ai_hp_zero" classname="round_manager_test" time="0.013">
+		<testcase name="test_player_win_when_ai_hp_zero" classname="round_manager_test" time="0.012">
 		</testcase>
 		<testcase name="test_player_lose_when_player_hp_zero" classname="round_manager_test" time="0.013">
 		</testcase>
 		<testcase name="test_opponent_transition_resets_ai_hp" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_opponent_transition_preserves_player_hp" classname="round_manager_test" time="0.013">
+		<testcase name="test_opponent_transition_preserves_player_hp" classname="round_manager_test" time="0.012">
 		</testcase>
 		<testcase name="test_opponent_transition_injects_victory_bonus" classname="round_manager_test" time="0.013">
 		</testcase>
-		<testcase name="test_opponent_transition_new_first_player" classname="round_manager_test" time="0.012">
+		<testcase name="test_opponent_transition_new_first_player" classname="round_manager_test" time="0.013">
 		</testcase>
-		<testcase name="test_round_result_signal_emitted_with_context" classname="round_manager_test" time="0.013">
+		<testcase name="test_round_result_signal_emitted_with_context" classname="round_manager_test" time="0.012">
 		</testcase>
-		<testcase name="test_three_rounds_counter_and_first_player" classname="round_manager_test" time="0.013">
+		<testcase name="test_three_rounds_counter_and_first_player" classname="round_manager_test" time="0.012">
 		</testcase>
 	</testsuite>
-	<testsuite id="3" name="ai_opponent_mvp_test" package="tests/unit/ai_opponent" timestamp="2026-04-28T16:26:23" hostname="localhost" tests="22" failures="0" errors="0" skipped="0" flaky="0" time="0.306">
-		<testcase name="test_hit_at_low_total" classname="ai_opponent_mvp_test" time="0.003">
+	<testsuite id="3" name="m1_smoke_test" package="tests/integration/smoke" timestamp="2026-04-28T18:10:43" hostname="localhost" tests="7" failures="0" errors="0" skipped="0" flaky="0" time="0.100">
+		<testcase name="test_smoke_sc1_dealt_cards_and_point_total" classname="m1_smoke_test" time="0.004">
+		</testcase>
+		<testcase name="test_smoke_sc2_player_can_hit_and_stand" classname="m1_smoke_test" time="0.014">
+		</testcase>
+		<testcase name="test_smoke_sc3_bust_detection" classname="m1_smoke_test" time="0.012">
+		</testcase>
+		<testcase name="test_smoke_sc4_ai_follows_rules" classname="m1_smoke_test" time="0.012">
+		</testcase>
+		<testcase name="test_smoke_sc5_settlement_applies_effects" classname="m1_smoke_test" time="0.012">
+		</testcase>
+		<testcase name="test_smoke_sc6_hp_changed_signals_valid" classname="m1_smoke_test" time="0.013">
+		</testcase>
+		<testcase name="test_smoke_sc7_chips_signal_path_valid" classname="m1_smoke_test" time="0.013">
+		</testcase>
+	</testsuite>
+	<testsuite id="4" name="ai_opponent_mvp_test" package="tests/unit/ai_opponent" timestamp="2026-04-28T18:10:43" hostname="localhost" tests="22" failures="0" errors="0" skipped="0" flaky="0" time="0.305">
+		<testcase name="test_hit_at_low_total" classname="ai_opponent_mvp_test" time="0.002">
 		</testcase>
 		<testcase name="test_hit_at_threshold" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
@@ -143,7 +163,7 @@
 		</testcase>
 		<testcase name="test_stand_at_21" classname="ai_opponent_mvp_test" time="0.013">
 		</testcase>
-		<testcase name="test_hit_at_minimum" classname="ai_opponent_mvp_test" time="0.012">
+		<testcase name="test_hit_at_minimum" classname="ai_opponent_mvp_test" time="0.013">
 		</testcase>
 		<testcase name="test_stand_at_20" classname="ai_opponent_mvp_test" time="0.013">
 		</testcase>
@@ -153,75 +173,75 @@
 		</testcase>
 		<testcase name="test_bust_at_30" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
-		<testcase name="test_determinism_stand_repeated" classname="ai_opponent_mvp_test" time="0.013">
+		<testcase name="test_determinism_stand_repeated" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
 		<testcase name="test_determinism_hit_repeated" classname="ai_opponent_mvp_test" time="0.013">
 		</testcase>
-		<testcase name="test_no_input_mutation" classname="ai_opponent_mvp_test" time="0.013">
+		<testcase name="test_no_input_mutation" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
-		<testcase name="test_sort_preserves_card_count" classname="ai_opponent_mvp_test" time="0.013">
+		<testcase name="test_sort_preserves_card_count" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
-		<testcase name="test_sort_deterministic_with_same_seed" classname="ai_opponent_mvp_test" time="0.012">
+		<testcase name="test_sort_deterministic_with_same_seed" classname="ai_opponent_mvp_test" time="0.013">
 		</testcase>
-		<testcase name="test_sort_different_seeds_likely_different" classname="ai_opponent_mvp_test" time="0.013">
+		<testcase name="test_sort_different_seeds_likely_different" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
-		<testcase name="test_sort_empty_hand" classname="ai_opponent_mvp_test" time="0.013">
+		<testcase name="test_sort_empty_hand" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
-		<testcase name="test_sort_single_card" classname="ai_opponent_mvp_test" time="0.013">
+		<testcase name="test_sort_single_card" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
-		<testcase name="test_sort_preserves_all_cards" classname="ai_opponent_mvp_test" time="0.013">
+		<testcase name="test_sort_preserves_all_cards" classname="ai_opponent_mvp_test" time="0.011">
 		</testcase>
-		<testcase name="test_sort_does_not_modify_original" classname="ai_opponent_mvp_test" time="0.012">
+		<testcase name="test_sort_does_not_modify_original" classname="ai_opponent_mvp_test" time="0.013">
 		</testcase>
-		<testcase name="test_sort_two_cards_both_orders_possible" classname="ai_opponent_mvp_test" time="0.012">
+		<testcase name="test_sort_two_cards_both_orders_possible" classname="ai_opponent_mvp_test" time="0.011">
 		</testcase>
 		<testcase name="test_aiaction_hit_and_stand_distinct" classname="ai_opponent_mvp_test" time="0.012">
 		</testcase>
 		<testcase name="test_aiaction_values" classname="ai_opponent_mvp_test" time="0.013">
 		</testcase>
 	</testsuite>
-	<testsuite id="4" name="card_data_model_test" package="tests/unit/card_data_model" timestamp="2026-04-28T16:26:23" hostname="localhost" tests="16" failures="0" errors="0" skipped="0" flaky="0" time="0.121">
-		<testcase name="test_prototype_lookup_52_unique" classname="card_data_model_test" time="0.005">
+	<testsuite id="5" name="card_data_model_test" package="tests/unit/card_data_model" timestamp="2026-04-28T18:10:44" hostname="localhost" tests="16" failures="0" errors="0" skipped="0" flaky="0" time="0.120">
+		<testcase name="test_prototype_lookup_52_unique" classname="card_data_model_test" time="0.007">
 		</testcase>
-		<testcase name="test_prototype_ace_fields" classname="card_data_model_test" time="0.005">
+		<testcase name="test_prototype_ace_fields" classname="card_data_model_test" time="0.004">
 		</testcase>
-		<testcase name="test_prototype_spade_king_buy_price" classname="card_data_model_test" time="0.004">
+		<testcase name="test_prototype_spade_king_buy_price" classname="card_data_model_test" time="0.005">
 		</testcase>
-		<testcase name="test_prototype_heart_king_buy_price" classname="card_data_model_test" time="0.003">
+		<testcase name="test_prototype_heart_king_buy_price" classname="card_data_model_test" time="0.004">
 		</testcase>
-		<testcase name="test_instance_creation_104_unique" classname="card_data_model_test" time="0.005">
+		<testcase name="test_instance_creation_104_unique" classname="card_data_model_test" time="0.004">
 		</testcase>
-		<testcase name="test_player_deck_defaults" classname="card_data_model_test" time="0.007">
+		<testcase name="test_player_deck_defaults" classname="card_data_model_test" time="0.006">
 		</testcase>
-		<testcase name="test_deck_invariant_after_mutation" classname="card_data_model_test" time="0.005">
+		<testcase name="test_deck_invariant_after_mutation" classname="card_data_model_test" time="0.004">
 		</testcase>
 		<testcase name="test_enhancement_overwrite" classname="card_data_model_test" time="0.005">
 		</testcase>
-		<testcase name="test_revision_increments" classname="card_data_model_test" time="0.007">
+		<testcase name="test_revision_increments" classname="card_data_model_test" time="0.006">
 		</testcase>
-		<testcase name="test_destroy_quality_clears_gem_keeps_stamp" classname="card_data_model_test" time="0.006">
+		<testcase name="test_destroy_quality_clears_gem_keeps_stamp" classname="card_data_model_test" time="0.005">
 		</testcase>
 		<testcase name="test_gem_suit_binding" classname="card_data_model_test" time="0.005">
 		</testcase>
 		<testcase name="test_metal_no_suit_restriction" classname="card_data_model_test" time="0.005">
 		</testcase>
-		<testcase name="test_sell_card_clears_enhancements" classname="card_data_model_test" time="0.005">
+		<testcase name="test_sell_card_clears_enhancements" classname="card_data_model_test" time="0.007">
 		</testcase>
-		<testcase name="test_to_dict_from_dict_roundtrip" classname="card_data_model_test" time="0.006">
+		<testcase name="test_to_dict_from_dict_roundtrip" classname="card_data_model_test" time="0.005">
 		</testcase>
 		<testcase name="test_get_instance_returns_correct_card" classname="card_data_model_test" time="0.006">
 		</testcase>
 		<testcase name="test_regenerate_ai_deck" classname="card_data_model_test" time="0.006">
 		</testcase>
 	</testsuite>
-	<testsuite id="5" name="chip_economy_test" package="tests/unit/chip_economy" timestamp="2026-04-28T16:26:23" hostname="localhost" tests="36" failures="0" errors="0" skipped="0" flaky="0" time="0.507">
+	<testsuite id="6" name="chip_economy_test" package="tests/unit/chip_economy" timestamp="2026-04-28T18:10:44" hostname="localhost" tests="36" failures="0" errors="0" skipped="0" flaky="0" time="0.506">
 		<testcase name="test_initialize_sets_balance_to_100" classname="chip_economy_test" time="0.003">
 		</testcase>
 		<testcase name="test_initialize_clears_transaction_log" classname="chip_economy_test" time="0.013">
 		</testcase>
 		<testcase name="test_balance_capped_at_999" classname="chip_economy_test" time="0.013">
 		</testcase>
-		<testcase name="test_add_chips_at_cap_returns_zero" classname="chip_economy_test" time="0.013">
+		<testcase name="test_add_chips_at_cap_returns_zero" classname="chip_economy_test" time="0.012">
 		</testcase>
 		<testcase name="test_all_six_income_sources" classname="chip_economy_test" time="0.012">
 		</testcase>
@@ -237,19 +257,19 @@
 		</testcase>
 		<testcase name="test_victory_bonus_opponent_0_returns_25" classname="chip_economy_test" time="0.013">
 		</testcase>
-		<testcase name="test_victory_bonus_opponent_9_returns_250" classname="chip_economy_test" time="0.012">
+		<testcase name="test_victory_bonus_opponent_9_returns_250" classname="chip_economy_test" time="0.014">
 		</testcase>
-		<testcase name="test_spend_chips_insufficient_returns_false" classname="chip_economy_test" time="0.013">
+		<testcase name="test_spend_chips_insufficient_returns_false" classname="chip_economy_test" time="0.012">
 		</testcase>
 		<testcase name="test_add_chips_zero_is_noop" classname="chip_economy_test" time="0.013">
 		</testcase>
-		<testcase name="test_add_chips_negative_rejected" classname="chip_economy_test" time="0.012">
+		<testcase name="test_add_chips_negative_rejected" classname="chip_economy_test" time="0.013">
 		</testcase>
 		<testcase name="test_add_chips_negative_no_signal" classname="chip_economy_test" time="0.012">
 		</testcase>
-		<testcase name="test_spend_chips_negative_rejected" classname="chip_economy_test" time="0.013">
+		<testcase name="test_spend_chips_negative_rejected" classname="chip_economy_test" time="0.012">
 		</testcase>
-		<testcase name="test_spend_chips_zero_rejected" classname="chip_economy_test" time="0.013">
+		<testcase name="test_spend_chips_zero_rejected" classname="chip_economy_test" time="0.012">
 		</testcase>
 		<testcase name="test_spend_chips_zero_no_signal" classname="chip_economy_test" time="0.012">
 		</testcase>
@@ -263,197 +283,213 @@
 		</testcase>
 		<testcase name="test_can_afford_more_than_balance" classname="chip_economy_test" time="0.013">
 		</testcase>
-		<testcase name="test_can_afford_zero" classname="chip_economy_test" time="0.014">
+		<testcase name="test_can_afford_zero" classname="chip_economy_test" time="0.013">
 		</testcase>
-		<testcase name="test_can_afford_negative" classname="chip_economy_test" time="0.012">
+		<testcase name="test_can_afford_negative" classname="chip_economy_test" time="0.013">
 		</testcase>
 		<testcase name="test_reset_for_new_game" classname="chip_economy_test" time="0.012">
 		</testcase>
-		<testcase name="test_signal_emitted_on_add_chips" classname="chip_economy_test" time="0.012">
+		<testcase name="test_signal_emitted_on_add_chips" classname="chip_economy_test" time="0.013">
 		</testcase>
 		<testcase name="test_signal_emitted_on_spend_chips" classname="chip_economy_test" time="0.012">
 		</testcase>
-		<testcase name="test_signal_not_emitted_on_zero_add" classname="chip_economy_test" time="0.014">
+		<testcase name="test_signal_not_emitted_on_zero_add" classname="chip_economy_test" time="0.012">
 		</testcase>
-		<testcase name="test_signal_not_emitted_on_insufficient_spend" classname="chip_economy_test" time="0.012">
+		<testcase name="test_signal_not_emitted_on_insufficient_spend" classname="chip_economy_test" time="0.013">
 		</testcase>
 		<testcase name="test_signal_not_emitted_at_cap" classname="chip_economy_test" time="0.012">
 		</testcase>
-		<testcase name="test_transaction_log_contains_income_and_spend" classname="chip_economy_test" time="0.012">
+		<testcase name="test_transaction_log_contains_income_and_spend" classname="chip_economy_test" time="0.013">
 		</testcase>
-		<testcase name="test_transaction_log_capped_income_records_actual" classname="chip_economy_test" time="0.011">
+		<testcase name="test_transaction_log_capped_income_records_actual" classname="chip_economy_test" time="0.012">
 		</testcase>
-		<testcase name="test_spend_exact_balance_to_zero" classname="chip_economy_test" time="0.013">
+		<testcase name="test_spend_exact_balance_to_zero" classname="chip_economy_test" time="0.011">
 		</testcase>
 		<testcase name="test_spend_side_pool_bet_purpose" classname="chip_economy_test" time="0.013">
 		</testcase>
 	</testsuite>
-	<testsuite id="6" name="combatant_core_api_test" package="tests/unit/combat" timestamp="2026-04-28T16:26:24" hostname="localhost" tests="38" failures="0" errors="0" skipped="0" flaky="0" time="0.533">
+	<testsuite id="7" name="combatant_core_api_test" package="tests/unit/combat" timestamp="2026-04-28T18:10:44" hostname="localhost" tests="38" failures="0" errors="0" skipped="0" flaky="0" time="0.534">
 		<testcase name="test_is_alive_at_full_hp" classname="combatant_core_api_test" time="0.003">
 		</testcase>
-		<testcase name="test_is_alive_at_one_hp" classname="combatant_core_api_test" time="0.013">
+		<testcase name="test_is_alive_at_one_hp" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_is_dead_at_zero_hp" classname="combatant_core_api_test" time="0.013">
+		<testcase name="test_is_dead_at_zero_hp" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_player_hp_is_100" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_player_hp_is_100" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_player_max_hp_is_100" classname="combatant_core_api_test" time="0.014">
+		<testcase name="test_player_max_hp_is_100" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_player_defense_starts_at_zero" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_player_defense_starts_at_zero" classname="combatant_core_api_test" time="0.013">
 		</testcase>
 		<testcase name="test_ai_default_hp_is_80" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_ai_hp_scaling_all_tiers" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_ai_hp_scaling_all_tiers" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_ai_defense_starts_at_zero" classname="combatant_core_api_test" time="0.014">
+		<testcase name="test_ai_defense_starts_at_zero" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_add_defense_accumulates" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_add_defense_accumulates" classname="combatant_core_api_test" time="0.013">
 		</testcase>
 		<testcase name="test_add_defense_no_cap" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_add_defense_to_ai" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_add_defense_to_ai" classname="combatant_core_api_test" time="0.013">
 		</testcase>
 		<testcase name="test_reset_defense_clears_both" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_damage_reduces_hp" classname="combatant_core_api_test" time="0.011">
+		<testcase name="test_damage_reduces_hp" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_damage_absorbed_by_defense" classname="combatant_core_api_test" time="0.013">
+		<testcase name="test_damage_absorbed_by_defense" classname="combatant_core_api_test" time="0.012">
 		</testcase>
 		<testcase name="test_damage_exceeds_defense_reduces_hp" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_damage_exact_defense_full_absorb" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_damage_exact_defense_full_absorb" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_damage_hp_floors_at_zero" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_damage_hp_floors_at_zero" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_damage_hp_floors_at_zero_no_negative" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_damage_hp_floors_at_zero_no_negative" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_damage_to_ai" classname="combatant_core_api_test" time="0.013">
+		<testcase name="test_damage_to_ai" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_is_alive_false_after_lethal_damage" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_is_alive_false_after_lethal_damage" classname="combatant_core_api_test" time="0.011">
 		</testcase>
-		<testcase name="test_is_alive_true_after_nonlethal_damage" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_is_alive_true_after_nonlethal_damage" classname="combatant_core_api_test" time="0.013">
 		</testcase>
 		<testcase name="test_heal_restores_hp" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_heal_capped_at_max_hp" classname="combatant_core_api_test" time="0.013">
+		<testcase name="test_heal_capped_at_max_hp" classname="combatant_core_api_test" time="0.012">
 		</testcase>
 		<testcase name="test_heal_at_max_hp_returns_full_overflow" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_heal_exact_to_max_no_overflow" classname="combatant_core_api_test" time="0.013">
+		<testcase name="test_heal_exact_to_max_no_overflow" classname="combatant_core_api_test" time="0.012">
 		</testcase>
 		<testcase name="test_heal_on_ai" classname="combatant_core_api_test" time="0.013">
 		</testcase>
 		<testcase name="test_reset_defense_idempotent_when_already_zero" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_reset_defense_twice_in_a_row" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_reset_defense_twice_in_a_row" classname="combatant_core_api_test" time="0.013">
 		</testcase>
 		<testcase name="test_hp_changed_emitted_on_damage" classname="combatant_core_api_test" time="0.014">
 		</testcase>
-		<testcase name="test_hp_changed_not_emitted_when_defense_absorbs_all" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_hp_changed_not_emitted_when_defense_absorbs_all" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_hp_changed_emitted_on_heal_when_hp_changes" classname="combatant_core_api_test" time="0.013">
+		<testcase name="test_hp_changed_emitted_on_heal_when_hp_changes" classname="combatant_core_api_test" time="0.011">
 		</testcase>
 		<testcase name="test_hp_changed_not_emitted_on_heal_at_max_hp" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_defense_changed_emitted_on_add" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_defense_changed_emitted_on_add" classname="combatant_core_api_test" time="0.013">
 		</testcase>
 		<testcase name="test_defense_changed_emitted_on_damage_absorb" classname="combatant_core_api_test" time="0.012">
 		</testcase>
-		<testcase name="test_defense_changed_emitted_on_reset" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_defense_changed_emitted_on_reset" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_defense_changed_not_emitted_on_reset_when_already_zero" classname="combatant_core_api_test" time="0.012">
+		<testcase name="test_defense_changed_not_emitted_on_reset_when_already_zero" classname="combatant_core_api_test" time="0.013">
 		</testcase>
-		<testcase name="test_signal_target_correct_for_ai" classname="combatant_core_api_test" time="0.013">
+		<testcase name="test_signal_target_correct_for_ai" classname="combatant_core_api_test" time="0.012">
 		</testcase>
 	</testsuite>
-	<testsuite id="7" name="hand_type_detection_test" package="tests/unit/hand_type_detection" timestamp="2026-04-28T16:26:25" hostname="localhost" tests="22" failures="0" errors="0" skipped="0" flaky="0" time="0.167">
+	<testsuite id="8" name="hand_type_detection_test" package="tests/unit/hand_type_detection" timestamp="2026-04-28T18:10:45" hostname="localhost" tests="22" failures="0" errors="0" skipped="0" flaky="0" time="0.167">
 		<testcase name="test_bust_returns_empty" classname="hand_type_detection_test" time="0.004">
 		</testcase>
 		<testcase name="test_non_bust_no_match" classname="hand_type_detection_test" time="0.004">
 		</testcase>
 		<testcase name="test_pair_detection" classname="hand_type_detection_test" time="0.004">
 		</testcase>
-		<testcase name="test_flush_detection" classname="hand_type_detection_test" time="0.005">
+		<testcase name="test_flush_detection" classname="hand_type_detection_test" time="0.003">
 		</testcase>
-		<testcase name="test_three_kind_detection" classname="hand_type_detection_test" time="0.004">
+		<testcase name="test_three_kind_detection" classname="hand_type_detection_test" time="0.005">
 		</testcase>
-		<testcase name="test_triple_seven_detection" classname="hand_type_detection_test" time="0.005">
+		<testcase name="test_triple_seven_detection" classname="hand_type_detection_test" time="0.007">
 		</testcase>
-		<testcase name="test_twenty_one_detection" classname="hand_type_detection_test" time="0.007">
+		<testcase name="test_twenty_one_detection" classname="hand_type_detection_test" time="0.005">
 		</testcase>
-		<testcase name="test_blackjack_type_ace_jack" classname="hand_type_detection_test" time="0.005">
+		<testcase name="test_blackjack_type_ace_jack" classname="hand_type_detection_test" time="0.006">
 		</testcase>
-		<testcase name="test_blackjack_excludes_queen" classname="hand_type_detection_test" time="0.005">
+		<testcase name="test_blackjack_excludes_queen" classname="hand_type_detection_test" time="0.006">
 		</testcase>
-		<testcase name="test_blackjack_excludes_king" classname="hand_type_detection_test" time="0.006">
+		<testcase name="test_blackjack_excludes_king" classname="hand_type_detection_test" time="0.005">
 		</testcase>
 		<testcase name="test_blackjack_excludes_ten" classname="hand_type_detection_test" time="0.006">
 		</testcase>
-		<testcase name="test_spade_blackjack_detection" classname="hand_type_detection_test" time="0.006">
+		<testcase name="test_spade_blackjack_detection" classname="hand_type_detection_test" time="0.007">
 		</testcase>
 		<testcase name="test_spade_blackjack_excludes_spade_queen" classname="hand_type_detection_test" time="0.005">
 		</testcase>
-		<testcase name="test_independent_pairs" classname="hand_type_detection_test" time="0.005">
+		<testcase name="test_independent_pairs" classname="hand_type_detection_test" time="0.007">
 		</testcase>
-		<testcase name="test_spade_blackjack_absorbs_blackjack" classname="hand_type_detection_test" time="0.006">
+		<testcase name="test_spade_blackjack_absorbs_blackjack" classname="hand_type_detection_test" time="0.005">
 		</testcase>
-		<testcase name="test_split_suppression" classname="hand_type_detection_test" time="0.006">
+		<testcase name="test_split_suppression" classname="hand_type_detection_test" time="0.005">
 		</testcase>
-		<testcase name="test_triple_seven_and_three_kind_cooccur" classname="hand_type_detection_test" time="0.006">
+		<testcase name="test_triple_seven_and_three_kind_cooccur" classname="hand_type_detection_test" time="0.005">
 		</testcase>
 		<testcase name="test_flush_two_cards" classname="hand_type_detection_test" time="0.006">
 		</testcase>
 		<testcase name="test_output_structure_completeness" classname="hand_type_detection_test" time="0.006">
 		</testcase>
-		<testcase name="test_validate_multipliers_default_passes" classname="hand_type_detection_test" time="0.005">
+		<testcase name="test_validate_multipliers_default_passes" classname="hand_type_detection_test" time="0.006">
 		</testcase>
-		<testcase name="test_validate_multipliers_violates_hierarchy" classname="hand_type_detection_test" time="0.005">
+		<testcase name="test_validate_multipliers_violates_hierarchy" classname="hand_type_detection_test" time="0.007">
 		</testcase>
 		<testcase name="test_custom_multipliers_overrides" classname="hand_type_detection_test" time="0.006">
 		</testcase>
 	</testsuite>
-	<testsuite id="8" name="point_calc_test" package="tests/unit/point_calculation" timestamp="2026-04-28T16:26:25" hostname="localhost" tests="18" failures="0" errors="0" skipped="0" flaky="0" time="0.134">
-		<testcase name="test_calculate_hand_standard_no_ace" classname="point_calc_test" time="0.004">
+	<testsuite id="9" name="point_calc_test" package="tests/unit/point_calculation" timestamp="2026-04-28T18:10:45" hostname="localhost" tests="18" failures="0" errors="0" skipped="0" flaky="0" time="0.134">
+		<testcase name="test_calculate_hand_standard_no_ace" classname="point_calc_test" time="0.005">
 		</testcase>
-		<testcase name="test_calculate_hand_single_ace_soft" classname="point_calc_test" time="0.004">
+		<testcase name="test_calculate_hand_single_ace_soft" classname="point_calc_test" time="0.003">
 		</testcase>
-		<testcase name="test_calculate_hand_ace_downgrade_to_21" classname="point_calc_test" time="0.005">
+		<testcase name="test_calculate_hand_ace_downgrade_to_21" classname="point_calc_test" time="0.003">
 		</testcase>
 		<testcase name="test_calculate_hand_bust_no_ace" classname="point_calc_test" time="0.005">
 		</testcase>
-		<testcase name="test_calculate_hand_four_aces" classname="point_calc_test" time="0.006">
+		<testcase name="test_calculate_hand_four_aces" classname="point_calc_test" time="0.005">
 		</testcase>
-		<testcase name="test_calculate_hand_empty" classname="point_calc_test" time="0.007">
+		<testcase name="test_calculate_hand_empty" classname="point_calc_test" time="0.006">
 		</testcase>
-		<testcase name="test_calculate_hand_exactly_21" classname="point_calc_test" time="0.006">
+		<testcase name="test_calculate_hand_exactly_21" classname="point_calc_test" time="0.005">
 		</testcase>
 		<testcase name="test_calculate_hand_exactly_22" classname="point_calc_test" time="0.005">
 		</testcase>
-		<testcase name="test_simulate_hit_non_ace" classname="point_calc_test" time="0.005">
+		<testcase name="test_simulate_hit_non_ace" classname="point_calc_test" time="0.006">
 		</testcase>
 		<testcase name="test_simulate_hit_ace" classname="point_calc_test" time="0.005">
 		</testcase>
-		<testcase name="test_simulate_hit_cascade_downgrade" classname="point_calc_test" time="0.005">
+		<testcase name="test_simulate_hit_cascade_downgrade" classname="point_calc_test" time="0.006">
 		</testcase>
-		<testcase name="test_simulate_hit_on_bust" classname="point_calc_test" time="0.004">
+		<testcase name="test_simulate_hit_on_bust" classname="point_calc_test" time="0.006">
 		</testcase>
-		<testcase name="test_point_result_has_five_fields" classname="point_calc_test" time="0.005">
+		<testcase name="test_point_result_has_five_fields" classname="point_calc_test" time="0.006">
 		</testcase>
 		<testcase name="test_calculate_hand_deterministic" classname="point_calc_test" time="0.006">
 		</testcase>
 		<testcase name="test_calculate_hand_single_king" classname="point_calc_test" time="0.005">
 		</testcase>
-		<testcase name="test_calculate_hand_single_ace" classname="point_calc_test" time="0.005">
+		<testcase name="test_calculate_hand_single_ace" classname="point_calc_test" time="0.006">
 		</testcase>
-		<testcase name="test_rank_value_mapping" classname="point_calc_test" time="0.006">
+		<testcase name="test_rank_value_mapping" classname="point_calc_test" time="0.005">
 		</testcase>
 		<testcase name="test_downgrade_stops_at_21" classname="point_calc_test" time="0.006">
 		</testcase>
 	</testsuite>
-	<testsuite id="9" name="settlement_event_test" package="tests/unit/settlement" timestamp="2026-04-28T16:26:25" hostname="localhost" tests="8" failures="0" errors="0" skipped="0" flaky="0" time="0.062">
+	<testsuite id="10" name="point_calculation_test" package="tests/unit" timestamp="2026-04-28T18:10:45" hostname="localhost" tests="7" failures="0" errors="0" skipped="0" flaky="0" time="0.045">
+		<testcase name="test_single_ten_value_card_returns_face_value" classname="point_calculation_test" time="0.005">
+		</testcase>
+		<testcase name="test_ace_eleven_when_under_bust" classname="point_calculation_test" time="0.002">
+		</testcase>
+		<testcase name="test_ace_demoted_to_one_when_bust" classname="point_calculation_test" time="0.002">
+		</testcase>
+		<testcase name="test_blackjack_returns_21" classname="point_calculation_test" time="0.006">
+		</testcase>
+		<testcase name="test_bust_over_21" classname="point_calculation_test" time="0.005">
+		</testcase>
+		<testcase name="test_multiple_aces_demoted_greedily" classname="point_calculation_test" time="0.006">
+		</testcase>
+		<testcase name="test_empty_hand_returns_zero" classname="point_calculation_test" time="0.005">
+		</testcase>
+	</testsuite>
+	<testsuite id="11" name="settlement_event_test" package="tests/unit/settlement" timestamp="2026-04-28T18:10:45" hostname="localhost" tests="8" failures="0" errors="0" skipped="0" flaky="0" time="0.060">
 		<testcase name="test_step_kind_has_nine_values" classname="settlement_event_test" time="0.004">
 		</testcase>
-		<testcase name="test_event_construction_all_fields" classname="settlement_event_test" time="0.004">
+		<testcase name="test_event_construction_all_fields" classname="settlement_event_test" time="0.005">
 		</testcase>
 		<testcase name="test_event_default_values" classname="settlement_event_test" time="0.005">
 		</testcase>
@@ -461,27 +497,11 @@
 		</testcase>
 		<testcase name="test_event_queue_clear_between_runs" classname="settlement_event_test" time="0.004">
 		</testcase>
-		<testcase name="test_event_queue_order_preserved" classname="settlement_event_test" time="0.006">
+		<testcase name="test_event_queue_order_preserved" classname="settlement_event_test" time="0.005">
 		</testcase>
-		<testcase name="test_event_queue_duplicate_safe" classname="settlement_event_test" time="0.005">
+		<testcase name="test_event_queue_duplicate_safe" classname="settlement_event_test" time="0.006">
 		</testcase>
 		<testcase name="test_event_is_refcounted" classname="settlement_event_test" time="0.006">
-		</testcase>
-	</testsuite>
-	<testsuite id="10" name="point_calculation_test" package="tests/unit" timestamp="2026-04-28T16:26:25" hostname="localhost" tests="7" failures="0" errors="0" skipped="0" flaky="0" time="0.046">
-		<testcase name="test_single_ten_value_card_returns_face_value" classname="point_calculation_test" time="0.003">
-		</testcase>
-		<testcase name="test_ace_eleven_when_under_bust" classname="point_calculation_test" time="0.003">
-		</testcase>
-		<testcase name="test_ace_demoted_to_one_when_bust" classname="point_calculation_test" time="0.004">
-		</testcase>
-		<testcase name="test_blackjack_returns_21" classname="point_calculation_test" time="0.005">
-		</testcase>
-		<testcase name="test_bust_over_21" classname="point_calculation_test" time="0.006">
-		</testcase>
-		<testcase name="test_multiple_aces_demoted_greedily" classname="point_calculation_test" time="0.006">
-		</testcase>
-		<testcase name="test_empty_hand_returns_zero" classname="point_calculation_test" time="0.006">
 		</testcase>
 	</testsuite>
 </testsuites>

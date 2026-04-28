@@ -37,6 +37,7 @@ func _ready() -> void:
 
 	_ui.player_hit_requested.connect(_on_player_hit)
 	_ui.player_stand_requested.connect(_round_manager.player_stand)
+	_ui.player_sort_confirmed.connect(_round_manager.confirm_sort)
 	_ui.start_round_requested.connect(_on_start_round)
 	_ui.transition_requested.connect(_on_transition)
 	_ui.new_game_requested.connect(_on_new_game)

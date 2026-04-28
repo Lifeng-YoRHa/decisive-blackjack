@@ -127,6 +127,15 @@ func set_seed(seed_value: int) -> void:
 	_rng.seed = seed_value
 
 
+## Called by UI when player confirms their card sort order.
+func confirm_sort(reordered_hand: Array) -> void:
+	if current_phase != RoundPhase.SORT:
+		return
+	player_hand.clear()
+	for card in reordered_hand:
+		player_hand.append(card)
+	_advance_phase()
+
 ## === Private ===
 
 
@@ -149,7 +158,9 @@ func _draw_card(owner: int) -> CardInstance:
 	var deck: Array = _card_data.get_player_deck() if owner == CardEnums.Owner.PLAYER else _card_data.get_ai_deck()
 	if deck.is_empty():
 		return null
-	return deck.pop_front() as CardInstance
+	var card: CardInstance = deck.pop_front() as CardInstance
+	card.expired = true
+	return card
 
 
 func _deal_cards() -> void:
@@ -186,7 +197,6 @@ func _on_phase_entered(phase: int) -> void:
 			pass
 		RoundPhase.SORT:
 			_do_auto_sort()
-			_advance_phase()
 		RoundPhase.RESOLUTION:
 			_run_resolution()
 			_advance_phase()
@@ -195,7 +205,7 @@ func _on_phase_entered(phase: int) -> void:
 
 
 func _check_hit_stand_complete() -> void:
-	if _player_standing and _ai_standing:
+	if _player_standing and _ai_standing and current_phase == RoundPhase.HIT_STAND:
 		_advance_phase()
 
 

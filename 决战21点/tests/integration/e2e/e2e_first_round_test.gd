@@ -60,6 +60,7 @@ func _run_round_capture() -> Dictionary:
 
 	_manager.start_round()
 	_manager.player_stand()
+	_manager.confirm_sort(_manager.player_hand.duplicate())
 
 	_resolution.settlement_step_completed.disconnect(events_cb)
 	_manager.round_result.disconnect(result_cb)
@@ -145,11 +146,13 @@ func test_e2e_player_hit_draws_card() -> void:
 
 func test_e2e_player_stand_completes_round() -> void:
 	_manager.start_round()
+	_manager.player_stand()
+	assert_int(_manager.current_phase).is_equal(RoundManager.RoundPhase.SORT)
 	var spy := {"result": -1}
 	var cb := func(r: int, _on: int, _rn: int, _ph: int, _ah: int) -> void:
 		spy["result"] = r
 	_manager.round_result.connect(cb)
-	_manager.player_stand()
+	_manager.confirm_sort(_manager.player_hand.duplicate())
 	_manager.round_result.disconnect(cb)
 	assert_int(spy["result"]).is_not_equal(-1)
 	assert_int(_manager.current_phase).is_equal(RoundManager.RoundPhase.DEATH_CHECK)
@@ -244,6 +247,7 @@ func test_e2e_three_rounds_accumulation() -> void:
 	for round_idx in range(3):
 		_manager.start_round()
 		_manager.player_stand()
+		_manager.confirm_sort(_manager.player_hand.duplicate())
 
 		var expected := _simulate_events(
 			events_spy["data"], player_hp, ai_hp, chips,

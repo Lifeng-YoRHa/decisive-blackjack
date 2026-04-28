@@ -6,9 +6,12 @@ signal player_stand_requested()
 signal start_round_requested()
 signal transition_requested()
 signal new_game_requested()
+signal player_sort_confirmed(order: Array)
 
 const CARD_WIDTH: float = 120.0
 const CARD_HEIGHT: float = 168.0
+const SORT_TIMER_SECONDS: int = 30
+const SORT_TIMER_RED_THRESHOLD: int = 5
 
 var _combat: CombatState
 var _chips: ChipEconomy
@@ -44,6 +47,10 @@ var _stand_button: Button
 var _start_round_button: Button
 var _transition_button: Button
 var _new_game_button: Button
+var _confirm_sort_button: Button
+var _sort_timer_label: Label
+var _sort_timer: Timer
+var _sort_time_remaining: int
 
 var _result_label: Label
 
@@ -246,6 +253,22 @@ func _build_action_bar() -> void:
 	_new_game_button.visible = false
 	_action_bar.add_child(_new_game_button)
 
+	_confirm_sort_button = _make_button("Confirm Sort")
+	_confirm_sort_button.visible = false
+	_action_bar.add_child(_confirm_sort_button)
+
+	_sort_timer_label = _make_label("", 20, Color.WHITE)
+	_sort_timer_label.visible = false
+	_sort_timer_label.custom_minimum_size = Vector2(60, 0)
+	_action_bar.add_child(_sort_timer_label)
+
+	_sort_timer = Timer.new()
+	_sort_timer.name = "SortTimer"
+	_sort_timer.one_shot = false
+	_sort_timer.wait_time = 1.0
+	_sort_timer.timeout.connect(_on_sort_timer_tick)
+	add_child(_sort_timer)
+
 
 func _connect_signals() -> void:
 	_combat.hp_changed.connect(_on_hp_changed)
@@ -259,6 +282,7 @@ func _connect_signals() -> void:
 	_start_round_button.pressed.connect(_on_start_round_pressed)
 	_transition_button.pressed.connect(_on_transition_pressed)
 	_new_game_button.pressed.connect(_on_new_game_pressed)
+	_confirm_sort_button.pressed.connect(_on_confirm_sort_pressed)
 
 
 func _on_hp_changed(target: int, new_hp: int, max_hp: int) -> void:
@@ -299,11 +323,16 @@ func _on_phase_changed(old_phase: int, new_phase: int) -> void:
 			_phase_label.text = "Hit or Stand"
 			_set_action_buttons(true, true)
 		RoundManager.RoundPhase.SORT:
-			_phase_label.text = "Sorting..."
+			_phase_label.text = "Arrange your cards"
 			_set_action_buttons(false, false)
+			_confirm_sort_button.visible = true
+			_enable_sort_mode()
+			_start_sort_timer()
 		RoundManager.RoundPhase.RESOLUTION:
 			_phase_label.text = "Resolving..."
 			_set_action_buttons(false, false)
+			_disable_sort_mode()
+			_stop_sort_timer()
 		RoundManager.RoundPhase.DEATH_CHECK:
 			_phase_label.text = "Round Over"
 			_set_action_buttons(false, false)
@@ -411,6 +440,59 @@ func _refresh_all_state() -> void:
 		_on_defense_changed(CardEnums.Owner.AI, _combat.ai.defense)
 	_chip_counter_label.text = "Chips: %d" % _chips.get_balance()
 	update_counters()
+
+
+func _on_confirm_sort_pressed() -> void:
+	var order: Array = []
+	for view in _player_card_views:
+		order.append(view.get_card_instance())
+	player_sort_confirmed.emit(order)
+	_stop_sort_timer()
+
+
+func _start_sort_timer() -> void:
+	_sort_time_remaining = SORT_TIMER_SECONDS
+	_sort_timer_label.text = "%ds" % _sort_time_remaining
+	_sort_timer_label.add_theme_color_override("font_color", Color.WHITE)
+	_sort_timer_label.visible = true
+	_sort_timer.start()
+
+
+func _stop_sort_timer() -> void:
+	_sort_timer.stop()
+	_sort_timer_label.visible = false
+
+
+func _on_sort_timer_tick() -> void:
+	_sort_time_remaining -= 1
+	if _sort_time_remaining <= 0:
+		_on_confirm_sort_pressed()
+		return
+	_sort_timer_label.text = "%ds" % _sort_time_remaining
+	if _sort_time_remaining <= SORT_TIMER_RED_THRESHOLD:
+		_sort_timer_label.add_theme_color_override("font_color", Color.RED)
+
+
+func _enable_sort_mode() -> void:
+	for i in _player_card_views.size():
+		_player_card_views[i].enable_sort_mode(true, i, _on_card_swap)
+
+
+func _disable_sort_mode() -> void:
+	_confirm_sort_button.visible = false
+	for view in _player_card_views:
+		view.enable_sort_mode(false, -1, Callable())
+
+
+func _on_card_swap(from: int, to: int) -> void:
+	var temp = _player_card_views[from]
+	_player_card_views[from] = _player_card_views[to]
+	_player_card_views[to] = temp
+	for view in _player_card_views:
+		_player_hand_area.remove_child(view)
+	for i in _player_card_views.size():
+		_player_hand_area.add_child(_player_card_views[i])
+		_player_card_views[i].set_sort_position(i)
 
 
 func _make_label(text: String, font_size: int, color: Color) -> Label:

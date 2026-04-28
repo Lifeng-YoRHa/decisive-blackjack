@@ -52,6 +52,7 @@ func _complete_hit_stand() -> void:
 func _run_full_round() -> void:
 	_manager.start_round()
 	_complete_hit_stand()
+	_manager.confirm_sort(_manager.player_hand.duplicate())
 
 
 # === AC-15: Game initialization ===
@@ -185,15 +186,35 @@ func test_full_phase_sequence() -> void:
 	assert_int(phases[3]).is_equal(RoundManager.RoundPhase.DEATH_CHECK)
 
 
-# === MVP auto-sort ===
+# === Sort phase waits for confirm ===
 
 
-func test_auto_sort_skips_to_resolution() -> void:
+func test_sort_waits_for_confirm() -> void:
 	_manager.start_round()
-	# Player stands to trigger flow
 	_manager.player_stand()
-	# After flow completes, should have passed through SORT → RESOLUTION
+	# After stand, should be stuck at SORT (not auto-advance)
+	assert_int(_manager.current_phase).is_equal(RoundManager.RoundPhase.SORT)
+	_manager.confirm_sort(_manager.player_hand.duplicate())
+	# After confirm, should reach DEATH_CHECK
 	assert_int(_manager.current_phase).is_equal(RoundManager.RoundPhase.DEATH_CHECK)
+
+
+func test_confirm_sort_rejected_outside_sort_phase() -> void:
+	var phase_before := _manager.current_phase
+	_manager.confirm_sort([])
+	assert_int(_manager.current_phase).is_equal(phase_before)
+
+
+func test_confirm_sort_reorders_player_hand() -> void:
+	_manager.start_round()
+	_manager.player_stand()
+	var original := _manager.player_hand.duplicate()
+	if original.size() >= 2:
+		var reversed := original.duplicate()
+		reversed.reverse()
+		_manager.confirm_sort(reversed)
+		assert_int(_manager.player_hand.size()).is_equal(original.size())
+		assert_object(_manager.player_hand[0]).is_equal(original[original.size() - 1])
 
 
 # === AC-05: Settlement first player — by points ===
