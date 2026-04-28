@@ -42,13 +42,13 @@ stories:
 
   - id: "2-4"
     name: "AI Opponent MVP: hit below 17, random sort"
-    file: ""
+    file: "production/epics/ai-opponent/story-001-static-hit-stand-sort.md"
     priority: must-have
-    status: ready-for-dev
+    status: done
     owner: ""
     estimate_days: 0.3
     blocker: ""
-    completed: ""
+    completed: "2026-04-28"
 
   - id: "2-5"
     name: "Round Management MVP: simplified 8-phase flow"

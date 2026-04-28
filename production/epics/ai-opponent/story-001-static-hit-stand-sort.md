@@ -1,7 +1,7 @@
 # Story 001: Static Hit/Stand Decision and Random Sort
 
 > **Epic**: AI Opponent
-> **Status**: Ready
+> **Status**: Complete
 > **Layer**: Feature
 > **Type**: Logic
 > **Manifest Version**: N/A — manifest not yet created
@@ -29,11 +29,11 @@
 
 *From GDD `design/gdd/ai-opponent.md`, scoped to MVP:*
 
-- [ ] AC-05 (BASIC): AI returns HIT when `point_total < 17`, STAND when `point_total >= 17`
-- [ ] AC-09 (Bust forces stand): AI returns STAND when `is_bust = true`, regardless of tier
-- [ ] AC-17 (Determinism): Same inputs produce same decision (stateless — no global/static mutation)
-- [ ] Random sort: AI card sort order is random (uses seeded RNG), no optimization
-- [ ] AIAction enum defined: HIT, STAND (future: DOUBLE_DOWN, SPLIT, BUY_INSURANCE, SKIP_INSURANCE)
+- [x] AC-05 (BASIC): AI returns HIT when `point_total < 17`, STAND when `point_total >= 17`
+- [x] AC-09 (Bust forces stand): AI returns STAND when `is_bust = true`, regardless of tier
+- [x] AC-17 (Determinism): Same inputs produce same decision (stateless — no global/static mutation)
+- [x] Random sort: AI card sort order is random (uses seeded RNG), no optimization
+- [x] AIAction enum defined: HIT, STAND (future: DOUBLE_DOWN, SPLIT, BUY_INSURANCE, SKIP_INSURANCE)
 
 ---
 
@@ -118,7 +118,7 @@ The full ADR defines tier tables (TIER_TABLE, HIT_THRESHOLD, SORT_STRATEGY) — 
 **Story Type**: Logic
 **Required evidence**: `tests/unit/ai_opponent/ai_opponent_mvp_test.gd` — must exist and pass
 
-**Status**: [ ] Not yet created
+**Status**: [x] Created and passing (22 test functions)
 
 ---
 
@@ -126,3 +126,10 @@ The full ADR defines tier tables (TIER_TABLE, HIT_THRESHOLD, SORT_STRATEGY) — 
 
 - Depends on: None (Sprint 1 CardDataModel provides card types)
 - Unlocks: Round Management epic (needs AI decisions during HIT_STAND phase)
+
+## Completion Notes
+**Completed**: 2026-04-28
+**Criteria**: 5/5 passing
+**Deviations**: ADVISORY — initialize() and make_decision() signatures simplified vs ADR-0006 (story-scoped for MVP, forward-compatible)
+**Test Evidence**: Logic — tests/unit/ai_opponent/ai_opponent_mvp_test.gd (22 test functions, all passing)
+**Code Review**: APPROVED WITH SUGGESTIONS (null guard for _rng added per suggestion)
