@@ -41,7 +41,7 @@ func destroy_quality() -> void:
 func purify() -> bool:
 	if quality == CardEnums.Quality.NONE or quality_level == CardEnums.QualityLevel.I:
 		return false
-	quality_level -= 1
+	quality_level += 1
 	revision += 1
 	attribute_changed.emit(self)
 	return true
