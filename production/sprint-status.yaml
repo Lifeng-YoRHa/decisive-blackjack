@@ -44,11 +44,11 @@ stories:
     name: "Shop System: fixed services + random inventory + weighted random + pricing"
     file: ""
     priority: must-have
-    status: ready-for-dev
+    status: done
     owner: ""
     estimate_days: 0.5
     blocker: ""
-    completed: ""
+    completed: "2026-04-30"
 
   - id: "3-5"
     name: "Match Progression: 5-state FSM with shop integration between opponents"

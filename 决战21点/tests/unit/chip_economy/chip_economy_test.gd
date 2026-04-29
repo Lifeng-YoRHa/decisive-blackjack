@@ -29,23 +29,23 @@ func test_initialize_clears_transaction_log() -> void:
 
 
 # ============================================================
-# AC-03: Balance capped at 999; add_chips returns actual gained
+# AC-03: Balance capped at CHIP_CAP; add_chips returns actual gained
 # ============================================================
 
-func test_balance_capped_at_999() -> void:
-	_chips.add_chips(800, ChipEconomy.ChipSource.RESOLUTION)
-	var actual := _chips.add_chips(100, ChipEconomy.ChipSource.RESOLUTION)
-	assert_int(_chips.get_balance()).is_equal(999)
+func test_balance_capped_at_chip_cap() -> void:
+	_chips.add_chips(9800, ChipEconomy.ChipSource.RESOLUTION)
+	var actual := _chips.add_chips(200, ChipEconomy.ChipSource.RESOLUTION)
+	assert_int(_chips.get_balance()).is_equal(ChipEconomy.CHIP_CAP)
 	assert_int(actual).is_equal(99)
 
 
 func test_add_chips_at_cap_returns_zero() -> void:
-	_chips.add_chips(898, ChipEconomy.ChipSource.RESOLUTION)
+	_chips.add_chips(9898, ChipEconomy.ChipSource.RESOLUTION)
 	var actual := _chips.add_chips(1, ChipEconomy.ChipSource.RESOLUTION)
 	assert_int(actual).is_equal(1)
 	var overflow := _chips.add_chips(50, ChipEconomy.ChipSource.RESOLUTION)
 	assert_int(overflow).is_equal(0)
-	assert_int(_chips.get_balance()).is_equal(999)
+	assert_int(_chips.get_balance()).is_equal(ChipEconomy.CHIP_CAP)
 
 
 # ============================================================
@@ -194,10 +194,10 @@ func test_spend_chips_zero_no_signal() -> void:
 # ============================================================
 
 func test_add_chips_returns_actual_gained_near_cap() -> void:
-	_chips.add_chips(890, ChipEconomy.ChipSource.RESOLUTION)
+	_chips.add_chips(9850, ChipEconomy.ChipSource.RESOLUTION)
 	var actual := _chips.add_chips(50, ChipEconomy.ChipSource.RESOLUTION)
-	assert_int(actual).is_equal(9)
-	assert_int(_chips.get_balance()).is_equal(999)
+	assert_int(actual).is_equal(49)
+	assert_int(_chips.get_balance()).is_equal(ChipEconomy.CHIP_CAP)
 
 
 func test_add_chips_returns_full_amount_when_below_cap() -> void:
@@ -294,7 +294,7 @@ func test_signal_not_emitted_on_insufficient_spend() -> void:
 
 
 func test_signal_not_emitted_at_cap() -> void:
-	_chips.add_chips(898, ChipEconomy.ChipSource.RESOLUTION)
+	_chips.add_chips(9898, ChipEconomy.ChipSource.RESOLUTION)
 	var spy := {"emitted": false}
 	_chips.chips_changed.connect(func(_b: int, _d: int, _s: int) -> void:
 		spy["emitted"] = true
@@ -328,7 +328,7 @@ func test_transaction_log_contains_income_and_spend() -> void:
 
 
 func test_transaction_log_capped_income_records_actual() -> void:
-	_chips.add_chips(850, ChipEconomy.ChipSource.RESOLUTION)
+	_chips.add_chips(9850, ChipEconomy.ChipSource.RESOLUTION)
 	_chips.add_chips(50, ChipEconomy.ChipSource.VICTORY_BONUS)
 	var log_entries := _chips.get_transaction_log()
 	assert_int(log_entries.size()).is_equal(2)

@@ -234,7 +234,7 @@ func test_hammer_no_target_opponent_fewer_cards() -> void:
 	assert_int(_combat.player.defense).is_equal(9)
 	assert_int(_combat.ai.hp).is_equal(80 - 7)
 	# 3 cards settled (p1, a1, p2) → at least 3 events
-	assert_int(events.size() >= 3).is_true()
+	assert_bool(events.size() >= 3).is_true()
 
 
 # === Gem destroy ===
@@ -386,7 +386,8 @@ func test_hammer_card_with_gem_quality_destroy_runs() -> void:
 	# HAMMER invalidates AI card. Player SPADES-9 builds defense.
 	# Gem destroy check runs on HAMMER card itself (OBSIDIAN III).
 	assert_bool(a1.invalidated).is_true()
-	assert_int(_combat.player.defense).is_equal(9)
+	# SPADES suit_total = base(9) + OBSIDIAN III combat bonus(3) = 12
+	assert_int(_combat.player.defense).is_equal(12)
 	assert_bool(card.quality == CardEnums.Quality.NONE or card.quality == CardEnums.Quality.OBSIDIAN).is_true()
 
 
@@ -471,11 +472,12 @@ func test_empty_player_hand_ai_cards_settle_normally() -> void:
 	var a1 := _make_card(CardEnums.Suit.DIAMONDS, CardEnums.Rank.SEVEN, CardEnums.Owner.AI)
 	var a2 := _make_card(CardEnums.Suit.HEARTS, CardEnums.Rank.THREE, CardEnums.Owner.AI)
 	var input := _make_input([], [a1, a2])
+	_combat.ai.hp = 70  # Damage AI so HEAL has room below max_hp
 
 	_engine.run_pipeline(input)
 
 	assert_int(_combat.player.hp).is_equal(100 - 7)
-	assert_int(_combat.ai.hp).is_equal(80 + 3)
+	assert_int(_combat.ai.hp).is_equal(70 + 3)
 
 
 func test_emerald_quality_adds_chip_bonus_through_pipeline() -> void:

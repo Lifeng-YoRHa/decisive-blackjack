@@ -19,7 +19,7 @@ enum ChipPurpose {
 signal chips_changed(new_balance: int, delta: int, source: int)
 
 const INITIAL_BALANCE: int = 100
-const CHIP_CAP: int = 999
+const CHIP_CAP: int = 9999
 const VICTORY_BASE: int = 50
 const VICTORY_SCALE: int = 25
 
