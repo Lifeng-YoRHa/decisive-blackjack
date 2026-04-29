@@ -9,6 +9,7 @@ var quality: int = CardEnums.Quality.NONE
 var quality_level: int = CardEnums.QualityLevel.III
 var revision: int = 0
 var expired: bool = false
+var invalidated: bool = false
 
 
 func _init(p_prototype: CardPrototype, p_owner: int) -> void:
@@ -51,6 +52,7 @@ func sell_card() -> void:
 	stamp = CardEnums.Stamp.NONE
 	quality = CardEnums.Quality.NONE
 	quality_level = CardEnums.QualityLevel.III
+	invalidated = false
 	revision += 1
 	attribute_changed.emit(self)
 
@@ -64,6 +66,7 @@ func to_dict() -> Dictionary:
 		"quality": quality,
 		"quality_level": quality_level,
 		"revision": revision,
+		"invalidated": invalidated,
 	}
 
 
@@ -74,4 +77,5 @@ static func from_dict(data: Dictionary, prototypes: Dictionary) -> CardInstance:
 	card.quality = data.quality
 	card.quality_level = data.quality_level
 	card.revision = data.revision
+	card.invalidated = data.get("invalidated", false)
 	return card

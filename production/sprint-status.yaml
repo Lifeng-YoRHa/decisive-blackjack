@@ -24,21 +24,21 @@ stories:
     name: "Card Quality System: 8 quality types, 3 purity levels, gem-suit binding, bonus lookup"
     file: ""
     priority: must-have
-    status: ready-for-dev
+    status: done
     owner: ""
     estimate_days: 0.3
     blocker: ""
-    completed: ""
+    completed: "2026-04-29"
 
   - id: "3-3"
     name: "Resolution Engine v2: stamps + quality + HAMMER pre-scan + gem destroy"
     file: ""
     priority: must-have
-    status: ready-for-dev
+    status: done
     owner: ""
     estimate_days: 0.5
     blocker: ""
-    completed: ""
+    completed: "2026-04-29"
 
   - id: "3-4"
     name: "Shop System: fixed services + random inventory + weighted random + pricing"
