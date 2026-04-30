@@ -10,3 +10,5 @@ var player_multipliers: Array[float] = []
 var ai_multipliers: Array[float] = []
 var settlement_first_player: CardEnums.Owner = CardEnums.Owner.PLAYER
 var rng_seed: int = -1
+var player_bust: bool = false
+var ai_bust: bool = false

@@ -47,6 +47,8 @@ var ai_result: PointResult
 
 var _player_standing: bool = false
 var _ai_standing: bool = false
+var _shuffled_player_deck: Array = []
+var _shuffled_ai_deck: Array = []
 
 
 func initialize(
@@ -104,6 +106,12 @@ func player_hit() -> void:
 	if current_phase != RoundPhase.HIT_STAND or _player_standing:
 		return
 	var card: CardInstance = _draw_card(CardEnums.Owner.PLAYER)
+	if card == null:
+		_player_standing = true
+		if not _ai_standing:
+			_run_ai_decision()
+		_check_hit_stand_complete()
+		return
 	player_hand.append(card)
 	player_result = PointCalc.calculate_hand(player_hand)
 	if player_result.is_bust:
@@ -140,10 +148,10 @@ func confirm_sort(reordered_hand: Array) -> void:
 
 
 func _shuffle_decks() -> void:
-	var player_deck: Array = _card_data.get_player_deck()
-	_shuffle_array(player_deck)
-	var ai_deck: Array = _card_data.get_ai_deck()
-	_shuffle_array(ai_deck)
+	_shuffled_player_deck = _card_data.get_player_deck()
+	_shuffle_array(_shuffled_player_deck)
+	_shuffled_ai_deck = _card_data.get_ai_deck()
+	_shuffle_array(_shuffled_ai_deck)
 
 
 func _shuffle_array(arr: Array) -> void:
@@ -155,9 +163,19 @@ func _shuffle_array(arr: Array) -> void:
 
 
 func _draw_card(owner: int) -> CardInstance:
-	var deck: Array = _card_data.get_player_deck() if owner == CardEnums.Owner.PLAYER else _card_data.get_ai_deck()
+	var deck: Array = _shuffled_player_deck if owner == CardEnums.Owner.PLAYER else _shuffled_ai_deck
 	if deck.is_empty():
-		return null
+		# Reshuffle from unexpired cards when draw pile runs out
+		if owner == CardEnums.Owner.PLAYER:
+			_shuffled_player_deck = _card_data.get_player_deck()
+			_shuffle_array(_shuffled_player_deck)
+			deck = _shuffled_player_deck
+		else:
+			_shuffled_ai_deck = _card_data.get_ai_deck()
+			_shuffle_array(_shuffled_ai_deck)
+			deck = _shuffled_ai_deck
+		if deck.is_empty():
+			return null
 	var card: CardInstance = deck.pop_front() as CardInstance
 	card.expired = true
 	return card
@@ -168,15 +186,17 @@ func _deal_cards() -> void:
 	var second: int = _opposite(first)
 	for i in 2:
 		var first_card: CardInstance = _draw_card(first)
-		if first == CardEnums.Owner.PLAYER:
-			player_hand.append(first_card)
-		else:
-			ai_hand.append(first_card)
+		if first_card != null:
+			if first == CardEnums.Owner.PLAYER:
+				player_hand.append(first_card)
+			else:
+				ai_hand.append(first_card)
 		var second_card: CardInstance = _draw_card(second)
-		if second == CardEnums.Owner.PLAYER:
-			player_hand.append(second_card)
-		else:
-			ai_hand.append(second_card)
+		if second_card != null:
+			if second == CardEnums.Owner.PLAYER:
+				player_hand.append(second_card)
+			else:
+				ai_hand.append(second_card)
 	player_result = PointCalc.calculate_hand(player_hand)
 	ai_result = PointCalc.calculate_hand(ai_hand)
 
@@ -215,8 +235,11 @@ func _run_ai_decision() -> void:
 	var decision: int = _ai.make_decision(ai_result)
 	if decision == AIOpponent.AIAction.HIT:
 		var card: CardInstance = _draw_card(CardEnums.Owner.AI)
-		ai_hand.append(card)
-		ai_result = PointCalc.calculate_hand(ai_hand)
+		if card == null:
+			_ai_standing = true
+		else:
+			ai_hand.append(card)
+			ai_result = PointCalc.calculate_hand(ai_hand)
 		if not ai_result.is_bust:
 			_run_ai_decision()
 		else:
@@ -255,6 +278,8 @@ func _run_resolution() -> void:
 	input.player_multipliers = player_mult
 	input.ai_multipliers = ai_mult
 	input.settlement_first_player = settlement_first
+	input.player_bust = player_result.is_bust
+	input.ai_bust = ai_result.is_bust
 
 	_resolution.run_pipeline(input)
 

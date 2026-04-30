@@ -29,6 +29,21 @@ func run_pipeline(input: PipelineInput) -> void:
 	if input.rng_seed >= 0:
 		_rng.seed = input.rng_seed
 
+	# Bust handling: busting side takes self-damage (bypasses defense) and skips settlement
+	if input.player_bust:
+		var bust_dmg: int = _calculate_bust_damage(input.sorted_player)
+		_combat.apply_bust_damage(CardEnums.Owner.PLAYER, bust_dmg)
+		_emit_event(SettlementEvent.StepKind.BASE_VALUE, null, bust_dmg, CardEnums.Owner.PLAYER, {"bust": true})
+	if input.ai_bust:
+		var bust_dmg: int = _calculate_bust_damage(input.sorted_ai)
+		_combat.apply_bust_damage(CardEnums.Owner.AI, bust_dmg)
+		_emit_event(SettlementEvent.StepKind.BASE_VALUE, null, bust_dmg, CardEnums.Owner.AI, {"bust": true})
+
+	# Both bust — no settlement needed
+	if input.player_bust and input.ai_bust:
+		settlement_step_completed.emit(_event_queue.duplicate())
+		return
+
 	_phase_0c_hammer_scan(input.sorted_player, input.sorted_ai)
 
 	_run_alternating_settlement(
@@ -36,10 +51,19 @@ func run_pipeline(input: PipelineInput) -> void:
 		input.sorted_ai,
 		input.player_multipliers,
 		input.ai_multipliers,
-		input.settlement_first_player
+		input.settlement_first_player,
+		input.player_bust,
+		input.ai_bust
 	)
 
 	settlement_step_completed.emit(_event_queue.duplicate())
+
+
+func _calculate_bust_damage(hand: Array[CardInstance]) -> int:
+	var result: PointResult = PointCalc.calculate_hand(hand)
+	if not result.is_bust:
+		return 0
+	return result.point_total
 
 
 func _phase_0c_hammer_scan(sorted_player: Array[CardInstance], sorted_ai: Array[CardInstance]) -> void:
@@ -62,7 +86,9 @@ func _run_alternating_settlement(
 	sorted_ai: Array[CardInstance],
 	player_mult: Array[float],
 	ai_mult: Array[float],
-	first_player: CardEnums.Owner
+	first_player: CardEnums.Owner,
+	player_bust: bool,
+	ai_bust: bool
 ) -> void:
 	var first_cards: Array[CardInstance] = sorted_player if first_player == CardEnums.Owner.PLAYER else sorted_ai
 	var second_cards: Array[CardInstance] = sorted_ai if first_player == CardEnums.Owner.PLAYER else sorted_player
@@ -70,14 +96,16 @@ func _run_alternating_settlement(
 	var second_mult: Array[float] = ai_mult if first_player == CardEnums.Owner.PLAYER else player_mult
 	var first_owner: CardEnums.Owner = first_player
 	var second_owner: CardEnums.Owner = _opposite(first_player)
+	var first_bust: bool = player_bust if first_player == CardEnums.Owner.PLAYER else ai_bust
+	var second_bust: bool = ai_bust if first_player == CardEnums.Owner.PLAYER else player_bust
 
 	var max_pos: int = maxi(sorted_player.size(), sorted_ai.size())
 	for pos in range(max_pos):
-		if pos < first_cards.size():
+		if pos < first_cards.size() and not first_bust:
 			var mult: float = first_mult[pos] if pos < first_mult.size() else 1.0
 			_settle_card(first_cards[pos], mult, first_owner)
 
-		if pos < second_cards.size():
+		if pos < second_cards.size() and not second_bust:
 			var mult: float = second_mult[pos] if pos < second_mult.size() else 1.0
 			_settle_card(second_cards[pos], mult, second_owner)
 

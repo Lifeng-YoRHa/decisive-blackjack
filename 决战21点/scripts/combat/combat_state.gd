@@ -92,6 +92,13 @@ func add_defense(target: CardEnums.Owner, amount: int) -> void:
 	defense_changed.emit(target, combatant.defense)
 
 
+## Apply bust damage directly to HP, bypassing defense entirely.
+func apply_bust_damage(target: CardEnums.Owner, amount: int) -> void:
+	var combatant := _get_combatant(target)
+	combatant.hp = maxi(combatant.hp - amount, 0)
+	hp_changed.emit(target, combatant.hp, combatant.max_hp)
+
+
 ## Reset both combatants' defense to 0 (end of combat turn).
 ## Only emits defense_changed when defense actually changes.
 func reset_defense() -> void:

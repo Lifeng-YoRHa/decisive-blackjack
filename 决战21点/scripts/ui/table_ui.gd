@@ -55,6 +55,23 @@ var _sort_time_remaining: int
 var _result_label: Label
 
 
+func set_phase_text(text: String) -> void:
+	_phase_label.text = text
+
+
+func show_new_game_button() -> void:
+	_hit_button.disabled = true
+	_stand_button.disabled = true
+	_start_round_button.visible = false
+	_transition_button.visible = false
+	_new_game_button.visible = true
+	_confirm_sort_button.visible = false
+	_sort_timer_label.visible = false
+	_result_label.visible = true
+	_result_label.text = _phase_label.text
+	_result_label.add_theme_color_override("font_color", Color.YELLOW)
+
+
 func initialize(combat: CombatState, chips: ChipEconomy, round_manager: RoundManager) -> void:
 	_combat = combat
 	_chips = chips
@@ -352,8 +369,9 @@ func _on_round_result(result: int, opp: int, round_num: int, p_hp: int, ai_hp: i
 		RoundManager.RoundResult.PLAYER_WIN:
 			_result_label.text = "Opponent defeated!"
 			_result_label.add_theme_color_override("font_color", Color(0.2, 1.0, 0.3))
+			# MatchProgression handles shop/victory automatically
 			_start_round_button.visible = false
-			_transition_button.visible = true
+			_transition_button.visible = false
 			_new_game_button.visible = false
 		RoundManager.RoundResult.PLAYER_LOSE:
 			_result_label.text = "Game Over"

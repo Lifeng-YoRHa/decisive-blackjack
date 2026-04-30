@@ -19,6 +19,7 @@ var _chips: ChipEconomy = null
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _current_inventory: Array[ShopItem] = []
 var _sold_cards: Array[CardInstance] = []
+var _has_refreshed: bool = false
 
 
 func initialize(combat: CombatState, chips: ChipEconomy) -> void:
@@ -35,6 +36,7 @@ func set_rng_seed(seed_value: int) -> void:
 # ---------------------------------------------------------------------------
 
 func generate_inventory(player_deck: Array[CardInstance], opponent_number: int) -> Array[ShopItem]:
+	_has_refreshed = false
 	var items: Array[ShopItem] = []
 
 	# 2 random stamps (without replacement)
@@ -58,10 +60,15 @@ func generate_inventory(player_deck: Array[CardInstance], opponent_number: int) 
 	return items
 
 
-func refresh_inventory(player_deck: Array[CardInstance], opponent_number: int) -> bool:
+func refresh_inventory(player_deck: Array[CardInstance], opponent_number: int) -> int:
+	if _has_refreshed:
+		return -1
 	if not _chips.spend_chips(REFRESH_COST, ChipEconomy.ChipPurpose.SHOP_PURCHASE):
+		return 0
 		return false
 	generate_inventory(player_deck, opponent_number)
+	_has_refreshed = true
+	return 1
 	return true
 
 
@@ -113,6 +120,8 @@ func purify(card: CardInstance) -> bool:
 
 func sell_card(card: CardInstance) -> int:
 	if card in _sold_cards:
+		return 0
+	if card.stamp == CardEnums.Stamp.NONE and card.quality == CardEnums.Quality.NONE:
 		return 0
 	var investment: int = _calculate_investment(card)
 	var refund: int = int(investment * SELL_PRICE_RATIO)

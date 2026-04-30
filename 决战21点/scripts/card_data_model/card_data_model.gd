@@ -26,6 +26,9 @@ const GEM_COMBAT_BONUS: Dictionary = {
 
 
 func initialize() -> void:
+	_prototypes.clear()
+	_instances.clear()
+	_instance_index.clear()
 	_build_prototypes()
 	_build_instances()
 
@@ -42,6 +45,14 @@ func get_player_deck() -> Array:
 	var result: Array = []
 	for c in _instances:
 		if c.owner == CardEnums.Owner.PLAYER and not c.expired:
+			result.append(c)
+	return result
+
+
+func get_all_player_cards() -> Array:
+	var result: Array = []
+	for c in _instances:
+		if c.owner == CardEnums.Owner.PLAYER:
 			result.append(c)
 	return result
 

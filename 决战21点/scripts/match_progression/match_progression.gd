@@ -103,8 +103,8 @@ func enter_shop() -> void:
 
 func exit_shop() -> void:
 	_opponent_number += 1
-	transition_to(MatchState.OPPONENT_ACTIVE)
 	_advance_to_next_opponent()
+	transition_to(MatchState.OPPONENT_ACTIVE)
 
 
 func _on_round_result(

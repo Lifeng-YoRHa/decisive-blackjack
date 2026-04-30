@@ -34,12 +34,12 @@
 		<div class="report-container">
 			<h1>Testsuite Report</h1>
 			<div>
-				<span class="label">res://tests/unit/point_calculation/point_calc_test.gd</span>
+				<span class="label">res://tests/integration/match_progression/match_progression_test.gd</span>
 			</div>
 			<div class="summary">
 				<div class="summary-item">
 					<span class="label">Tests</span>
-					<span class="value">18</span>
+					<span class="value">15</span>
 				</div>
 				<div class="summary-item">
 					<span class="label">Skipped</span>
@@ -59,7 +59,7 @@
 				</div>
 				<div class="summary-item">
 					<span class="label">Duration</span>
-					<span class="value">134ms</span>
+					<span class="value">210ms</span>
 				</div>
 				<div class="success-rate">
 					<div class="check-icon status-passed">✓</div>
@@ -72,8 +72,8 @@
 		</div>
 		<div class="breadcrumb">
 			<a href="../index.html"><span>All</span></a>
-			<a href="../path/tests.unit.point_calculation.html"><span>tests/unit/point_calculation</span></a>
-			<a class="active" href="#"><span>point_calc_test</span></a>
+			<a href="../path/tests.integration.match_progression.html"><span>tests/integration/match_progression</span></a>
+			<a class="active" href="#"><span>match_progression_test</span></a>
 		</div>
 	</header>
 
@@ -94,11 +94,11 @@
 					<tbody>
 						
 								<tr class="testcase-group">
-									<td>test_calculate_hand_standard_no_ace</td>
+									<td>test_start_new_game_transitions_to_opponent_active</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>4ms</td>
+									<td>3ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -108,11 +108,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_single_ace_soft</td>
+									<td>test_continue_stays_in_opponent_active</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>4ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -122,11 +122,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_ace_downgrade_to_21</td>
+									<td>test_player_win_transitions_to_shop_before_opponent_8</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -136,11 +136,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_bust_no_ace</td>
+									<td>test_exit_shop_transitions_to_opponent_active</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -150,11 +150,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_four_aces</td>
+									<td>test_player_win_opponent_8_transitions_to_victory</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>4ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -164,11 +164,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_empty</td>
+									<td>test_player_lose_transitions_to_game_over</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -178,11 +178,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_exactly_21</td>
+									<td>test_victory_bonus_injected_on_opponent_defeat</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>14ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -192,11 +192,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_exactly_22</td>
+									<td>test_ai_deck_regenerated_on_opponent_transition</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>10ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -206,11 +206,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_simulate_hit_non_ace</td>
+									<td>test_ai_hp_scaled_per_opponent</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -220,11 +220,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_simulate_hit_ace</td>
+									<td>test_opponent_number_increments_after_shop_exit</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -234,11 +234,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_simulate_hit_cascade_downgrade</td>
+									<td>test_first_player_alternation_preserved_across_rounds</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>7ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -248,11 +248,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_simulate_hit_on_bust</td>
+									<td>test_invalid_transition_rejected</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -262,11 +262,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_point_result_has_five_fields</td>
+									<td>test_game_over_at_opponent_1</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>13ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -276,11 +276,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_deterministic</td>
+									<td>test_multiple_continue_rounds_before_opponent_defeat</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -290,53 +290,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_single_king</td>
+									<td>test_match_state_changed_signal_emitted</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
-									<td class="report-column">
-										<pre>
-
-										</pre>
-									</td>
-								</tr>
-
-
-								<tr class="testcase-group">
-									<td>test_calculate_hand_single_ace</td>
-									<td><span class="status status-passed">PASSED</span></td>
-									<td>0</td>
-									<td>0</td>
-									<td>5ms</td>
-									<td class="report-column">
-										<pre>
-
-										</pre>
-									</td>
-								</tr>
-
-
-								<tr class="testcase-group">
-									<td>test_rank_value_mapping</td>
-									<td><span class="status status-passed">PASSED</span></td>
-									<td>0</td>
-									<td>0</td>
-									<td>6ms</td>
-									<td class="report-column">
-										<pre>
-
-										</pre>
-									</td>
-								</tr>
-
-
-								<tr class="testcase-group">
-									<td>test_downgrade_stops_at_21</td>
-									<td><span class="status status-passed">PASSED</span></td>
-									<td>0</td>
-									<td>0</td>
-									<td>6ms</td>
+									<td>14ms</td>
 									<td class="report-column">
 										<pre>
 

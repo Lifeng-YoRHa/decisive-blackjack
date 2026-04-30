@@ -52,3 +52,16 @@ See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for full protocol and examples.
 ## Context Management
 
 @.claude/docs/context-management.md
+
+## GDScript / Godot Conventions
+- Always call `add_child()` before calling any setup/init methods that reference child nodes. Never assume `_ready()` has run during manual initialization.
+- Be careful with lambda closures in signal callbacks — always capture variables explicitly rather than relying on closure over loop variables.
+- When moving logic between classes (e.g., from RoundManager to MatchProgression), always search for and update all references including tests.
+
+## Testing
+- After any code change that moves logic between classes or changes method signatures, immediately run the related tests before considering the task done.
+- When writing smoke tests or integration tests, test one behavior at a time rather than combining assertions.
+
+## Agent Delegation
+- When delegating implementation work to Task Agents, always verify the agent produced actual file output. If an agent only returns analysis/design without code, implement directly rather than re-delegating.
+- For complex multi-file implementations, prefer doing the work directly rather than delegating to a sub-agent.

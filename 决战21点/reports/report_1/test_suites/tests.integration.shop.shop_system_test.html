@@ -34,12 +34,12 @@
 		<div class="report-container">
 			<h1>Testsuite Report</h1>
 			<div>
-				<span class="label">res://tests/unit/point_calculation/point_calc_test.gd</span>
+				<span class="label">res://tests/integration/shop/shop_system_test.gd</span>
 			</div>
 			<div class="summary">
 				<div class="summary-item">
 					<span class="label">Tests</span>
-					<span class="value">18</span>
+					<span class="value">27</span>
 				</div>
 				<div class="summary-item">
 					<span class="label">Skipped</span>
@@ -59,7 +59,7 @@
 				</div>
 				<div class="summary-item">
 					<span class="label">Duration</span>
-					<span class="value">134ms</span>
+					<span class="value">525ms</span>
 				</div>
 				<div class="success-rate">
 					<div class="check-icon status-passed">✓</div>
@@ -72,8 +72,8 @@
 		</div>
 		<div class="breadcrumb">
 			<a href="../index.html"><span>All</span></a>
-			<a href="../path/tests.unit.point_calculation.html"><span>tests/unit/point_calculation</span></a>
-			<a class="active" href="#"><span>point_calc_test</span></a>
+			<a href="../path/tests.integration.shop.html"><span>tests/integration/shop</span></a>
+			<a class="active" href="#"><span>shop_system_test</span></a>
 		</div>
 	</header>
 
@@ -94,7 +94,7 @@
 					<tbody>
 						
 								<tr class="testcase-group">
-									<td>test_calculate_hand_standard_no_ace</td>
+									<td>test_buy_hp_spend_chips_and_heals_player</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
@@ -108,11 +108,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_single_ace_soft</td>
+									<td>test_buy_hp_capped_at_max_hp</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>4ms</td>
+									<td>12ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -122,11 +122,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_ace_downgrade_to_21</td>
+									<td>test_buy_stamp_assigns_stamp_and_spends_chips</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>19ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -136,11 +136,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_bust_no_ace</td>
+									<td>test_buy_quality_assigns_quality_and_spends_chips</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>20ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -150,11 +150,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_four_aces</td>
+									<td>test_buy_quality_ruby_on_diamonds_accepted</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>4ms</td>
+									<td>18ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -164,11 +164,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_empty</td>
+									<td>test_buy_quality_ruby_on_hearts_rejected</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>20ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -178,11 +178,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_exactly_21</td>
+									<td>test_purify_iii_to_ii_costs_100</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>19ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -192,11 +192,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_exactly_22</td>
+									<td>test_purify_ii_to_i_costs_200</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>20ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -206,11 +206,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_simulate_hit_non_ace</td>
+									<td>test_purify_rejected_when_no_quality</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>19ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -220,11 +220,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_simulate_hit_ace</td>
+									<td>test_purify_rejected_when_quality_level_i</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>19ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -234,11 +234,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_simulate_hit_cascade_downgrade</td>
+									<td>test_sell_refund_is_half_investment_and_clears_enhancements</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>7ms</td>
+									<td>18ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -248,11 +248,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_simulate_hit_on_bust</td>
+									<td>test_sell_no_enhancements_refund_is_half_base_price</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>19ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -262,11 +262,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_point_result_has_five_fields</td>
+									<td>test_seeded_rng_produces_deterministic_inventory</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>19ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -276,11 +276,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_deterministic</td>
+									<td>test_two_random_stamps_are_distinct</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>20ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -290,11 +290,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_single_king</td>
+									<td>test_refresh_rerolls_inventory_at_cost</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>19ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -304,11 +304,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_calculate_hand_single_ace</td>
+									<td>test_refresh_fails_if_insufficient_chips</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>5ms</td>
+									<td>19ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -318,11 +318,11 @@
 
 
 								<tr class="testcase-group">
-									<td>test_rank_value_mapping</td>
+									<td>test_buy_stamp_rejected_when_insufficient_chips</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>18ms</td>
 									<td class="report-column">
 										<pre>
 
@@ -332,11 +332,137 @@
 
 
 								<tr class="testcase-group">
-									<td>test_downgrade_stops_at_21</td>
+									<td>test_buy_quality_rejected_when_insufficient_chips</td>
 									<td><span class="status status-passed">PASSED</span></td>
 									<td>0</td>
 									<td>0</td>
-									<td>6ms</td>
+									<td>20ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_buy_hp_rejected_when_insufficient_chips</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_buy_stamp_overwrites_existing_stamp</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>19ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_buy_quality_overwrites_existing_quality</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>18ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_sell_refund_respects_chip_cap</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>20ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_generate_inventory_empty_deck_returns_only_stamps</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_enhanced_card_items_have_valid_kind</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>19ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_buy_hp_rejected_zero_amount</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>13ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_buy_hp_rejected_negative_amount</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>12ms</td>
+									<td class="report-column">
+										<pre>
+
+										</pre>
+									</td>
+								</tr>
+
+
+								<tr class="testcase-group">
+									<td>test_sell_card_twice_returns_zero_on_second_call</td>
+									<td><span class="status status-passed">PASSED</span></td>
+									<td>0</td>
+									<td>0</td>
+									<td>20ms</td>
 									<td class="report-column">
 										<pre>
 
