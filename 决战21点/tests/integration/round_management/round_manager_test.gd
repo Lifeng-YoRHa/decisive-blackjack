@@ -321,11 +321,11 @@ func test_opponent_transition_preserves_player_hp() -> void:
 	assert_int(_combat.player.hp).is_equal(45)
 
 
-func test_opponent_transition_injects_victory_bonus() -> void:
+func test_opponent_transition_does_not_inject_victory_bonus() -> void:
+	# Victory bonus injection moved to MatchProgression (ADR-0010 ownership boundary)
 	var balance_before := _chips.get_balance()
 	_manager.transition_to_next_opponent()
-	var bonus: int = ChipEconomy.calculate_victory_bonus(1)  # opponent 1 defeated
-	assert_int(_chips.get_balance()).is_equal(balance_before + bonus)
+	assert_int(_chips.get_balance()).is_equal(balance_before)
 
 
 func test_opponent_transition_new_first_player() -> void:

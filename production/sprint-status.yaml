@@ -54,11 +54,11 @@ stories:
     name: "Match Progression: 5-state FSM with shop integration between opponents"
     file: ""
     priority: must-have
-    status: ready-for-dev
+    status: done
     owner: ""
     estimate_days: 0.3
     blocker: ""
-    completed: ""
+    completed: "2026-04-30"
 
   - id: "3-6"
     name: "Shop UI: shop overlay with buy/sell/heal, random inventory, card selection"

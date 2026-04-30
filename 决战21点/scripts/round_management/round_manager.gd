@@ -326,8 +326,6 @@ func transition_to_next_opponent() -> void:
 	_combat.setup_opponent(opponent_number)
 	_card_data.regenerate_ai_deck()
 	_shuffle_decks()
-	var bonus: int = ChipEconomy.calculate_victory_bonus(opponent_number - 1)
-	_chips.add_chips(bonus, ChipEconomy.ChipSource.VICTORY_BONUS)
 
 
 static func _opposite(owner: int) -> int:

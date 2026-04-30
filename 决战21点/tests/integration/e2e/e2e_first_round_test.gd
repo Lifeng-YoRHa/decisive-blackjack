@@ -288,7 +288,7 @@ func test_e2e_opponent_transition() -> void:
 	assert_int(_manager.round_counter).is_equal(1)
 	assert_int(_combat.player.hp).is_equal(pre_player_hp)
 	assert_int(_combat.ai.hp).is_equal(100)  # Opponent 2 = 100 from scaling table
-	assert_bool(_chips.get_balance() > pre_chips).is_true()  # Victory bonus added
+	assert_int(_chips.get_balance()).is_equal(pre_chips)  # Victory bonus moved to MatchProgression
 
 
 # === Events correspond to actual cards in hands ===
